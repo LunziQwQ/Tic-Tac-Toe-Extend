@@ -4,11 +4,14 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
-#include "styleSheet.h"
-#include "common.h"
+#include "OOXX-styleSheet.h"
+#include "OOXX-common.h"
+#include "OOXX-timer.h"
+#include "OOXX-animation.h"
 
 int main(int argc, char* args[]) {
 	StyleSheet SS;
+	Timer timer;
 	if (!init(SS)){
 		printf("Failed to initialize!\n");
 	}else {
@@ -27,7 +30,8 @@ int main(int argc, char* args[]) {
 		SDL_RenderFillRect(gRenderer, &SS.gamePage_chessBoard);
 		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
 		SDL_RenderFillRects(gRenderer, SS.gamePage_chessPoint, 81);
-		
+		SDL_SetTextureAlphaMod(gTexture,255);
+
 		bool quit = false;
 		while (!quit){
 			//SDL_RenderClear(gRenderer);
@@ -48,6 +52,7 @@ int main(int argc, char* args[]) {
 					
 				}
 			}
+			timer.fpsControl();
 		}
 	}
 	close();
