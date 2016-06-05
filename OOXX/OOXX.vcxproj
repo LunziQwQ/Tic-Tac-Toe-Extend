@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="OOXX-animation.h" />
     <ClInclude Include="OOXX-common.h" />
+    <ClInclude Include="OOXX-stage.h" />
     <ClInclude Include="OOXX-styleSheet.h" />
     <ClInclude Include="OOXX-timer.h" />
   </ItemGroup>

@@ -8,39 +8,38 @@
 #include "OOXX-common.h"
 #include "OOXX-timer.h"
 #include "OOXX-animation.h"
+#include "OOXX-stage.h"
+
+StyleSheet SS;
+Timer timer;
+TitlePage titlePage;
+
+void loadTitlePage();
+void loadGamePage();
 
 int main(int argc, char* args[]) {
-	StyleSheet SS;
-	Timer timer;
+	
 	if (!init(SS)){
 		printf("Failed to initialize!\n");
 	}else {
 		//Title
-		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-		loadMediaToScreen("resource/background.png", NULL);
+		titlePage.load();
 		
-		/*gTexture = renderText("OOXX Chess!",
-			                  "ttf/consolab.ttf",
-			                  SS.red, 64, gRenderer);
-		SDL_RenderCopy(gRenderer, gTexture, NULL, &SS.titlePage_title);
-		SDL_SetRenderDrawColor(gRenderer, 0x66, 0xCC, 0xFF, 0xFF);
-		SDL_RenderFillRects(gRenderer, SS.titlePage_btns, 3);
-		*/
-		SDL_SetRenderDrawColor(gRenderer, 0x66, 0xCC, 0xFF, 0xFF);
-		SDL_RenderFillRect(gRenderer, &SS.gamePage_chessBoard);
+		
+		
+		
+		/*
 		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
 		SDL_RenderFillRects(gRenderer, SS.gamePage_chessPoint, 81);
 		SDL_SetTextureAlphaMod(gTexture,255);
-
+		*/
 		bool quit = false;
 		while (!quit){
-			//SDL_RenderClear(gRenderer);
-			//SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
-			SDL_RenderPresent(gRenderer);
 			while (SDL_PollEvent(&event) != 0){
 				if (event.type == SDL_QUIT){
 					quit = true;
 				}
+				
 				if (event.type == SDL_KEYDOWN){
 					switch (event.key.keysym.sym){
 						case SDLK_UP: SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -58,6 +57,12 @@ int main(int argc, char* args[]) {
 	close();
 	return 0;
 }
+
+
+
+void loadGamePage() {
+
+}
 //OOP
 /*
 Class Mouse
@@ -67,7 +72,7 @@ Class GameRound
 Class chessBoard
 Class StyleSheet
 Class Animation
-
+Class stage
 */
 //触发事件后选择函数（选择执行哪些动作函数
 //触发各个事件的动作封装为函数

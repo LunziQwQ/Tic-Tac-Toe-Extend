@@ -18,6 +18,9 @@
     <ClInclude Include="OOXX-animation.h">
       <Filter>SDL</Filter>
     </ClInclude>
+    <ClInclude Include="OOXX-stage.h">
+      <Filter>SDL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
