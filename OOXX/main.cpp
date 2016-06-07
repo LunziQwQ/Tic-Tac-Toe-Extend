@@ -8,61 +8,78 @@
 #include "OOXX-common.h"
 #include "OOXX-timer.h"
 #include "OOXX-animation.h"
+#include "OOXX-resource.h"
 #include "OOXX-stage.h"
 
-StyleSheet SS;
-Timer timer;
-TitlePage titlePage;
 
-void loadTitlePage();
-void loadGamePage();
+StyleSheet SS;			//样式表类
+Timer timer;			//计时（帧）器类
+Resource resource;
+
+//舞台初始化
+TitlePage titlePage;	
+GamePage gamePage;
+
+const int TITLEPAGE = 0;
+const int GAMEPAGE = 1;
+
 
 int main(int argc, char* args[]) {
 	
-	if (!init(SS)){
+	if (!init(SS)){										//验证SDL是否成功加载
 		printf("Failed to initialize!\n");
 	}else {
-		//Title
-		titlePage.load();
-		
-		
-		
-		
-		/*
-		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
-		SDL_RenderFillRects(gRenderer, SS.gamePage_chessPoint, 81);
-		SDL_SetTextureAlphaMod(gTexture,255);
-		*/
-		bool quit = false;
-		while (!quit){
+		bool quit = false;								//程序退出flag
+		int status = 0;
+
+		//程序主循环，当用户退出时结束
+		while (!quit){						
+			//事件处理循环
 			while (SDL_PollEvent(&event) != 0){
+				//退出事件：触发时跳出主循环
 				if (event.type == SDL_QUIT){
 					quit = true;
 				}
-				
-				if (event.type == SDL_KEYDOWN){
-					switch (event.key.keysym.sym){
-						case SDLK_UP: SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-							break;
-						case SDLK_DOWN: SDL_SetRenderDrawColor(gRenderer, 0x66, 0xCC, 0xFF, 0xFF);
-							break;
+				//鼠标事件
+				if (event.type == SDL_MOUSEBUTTONDOWN) {
+					int x, y;
+					SDL_GetMouseState(&x, &y);			//获取鼠标点击坐标
+
+					switch (status){
+					case TITLEPAGE: status = titlePage.onClick(x, y);
+						break;
+					case GAMEPAGE: status = gamePage.onClick(x, y);
+						break;
+
+
 					}
-				}if (event.type == SDL_MOUSEBUTTONDOWN) {
-					
 				}
 			}
-			timer.fpsControl();
+			
+
+			switch (status) {
+			case TITLEPAGE: 
+				titlePage.load();
+				break;
+			case GAMEPAGE:
+				gamePage.load();
+				break;
+
+			}
+				
+			
+			SDL_RenderPresent(gRenderer);				//渲染当前帧的纹理
+			SDL_RenderClear(gRenderer);					//清除上一帧的纹理
+			timer.fpsControl();							//帧数控制
 		}
 	}
-	close();
+	close();											//关闭并释放SDL相关
 	return 0;
 }
 
 
 
-void loadGamePage() {
 
-}
 //OOP
 /*
 Class Mouse

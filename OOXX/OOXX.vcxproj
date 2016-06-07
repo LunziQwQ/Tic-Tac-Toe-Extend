@@ -148,6 +148,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="OOXX-resource.h" />
     <ClInclude Include="OOXX-animation.h" />
     <ClInclude Include="OOXX-common.h" />
     <ClInclude Include="OOXX-stage.h" />

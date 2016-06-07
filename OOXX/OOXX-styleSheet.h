@@ -1,5 +1,6 @@
 class StyleSheet {
 public:
+	int Down = 0;
 	//设定位置方法
 	SDL_Rect setRect(int x, int y, int width, int height);
 	SDL_Rect* getChessPoint();
@@ -42,7 +43,7 @@ public:
 SDL_Rect StyleSheet::setRect(int x, int y, int width, int height) {
 	SDL_Rect rect;
 	rect.x = x;
-	rect.y = y;
+	rect.y = y + Down;
 	rect.w = width;
 	rect.h = height;
 	return rect;

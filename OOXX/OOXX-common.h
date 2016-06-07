@@ -9,7 +9,6 @@ SDL_Texture* renderText(const std::string message,
 	                    SDL_Color color,
 	                    int fontsize,
 	                    SDL_Renderer *renderer);
-void loadMediaToScreen(std::string path,SDL_Rect* rect);
 
 //全局变量
 SDL_Window* gWindow = NULL;		
@@ -94,15 +93,6 @@ SDL_Texture* loadTexture(std::string path){
 		SDL_FreeSurface(loadedSurface);
 	}
 	return newTexture;
-}
-
-void loadMediaToScreen(std::string path, SDL_Rect* rect) {
-	gTexture = loadTexture(path);
-	if (gTexture == NULL) {
-		printf("Failed to load texture image!\n");
-	} else {
-		SDL_RenderCopy(gRenderer, gTexture, NULL, rect);
-	}
 }
 
 SDL_Texture* renderText(const std::string message,
