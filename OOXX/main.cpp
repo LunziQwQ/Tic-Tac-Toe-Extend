@@ -10,19 +10,22 @@
 #include "OOXX-animation.h"
 #include "OOXX-resource.h"
 #include "OOXX-stage.h"
-
+#include "OOXX_keyboard.h"
 
 StyleSheet SS;			//样式表类
 Timer timer;			//计时（帧）器类
-Resource resource;
 
-//舞台初始化
-TitlePage titlePage;	
-GamePage gamePage;
 
 const int TITLEPAGE = 0;
 const int GAMEPAGE = 1;
 
+
+class Apple {
+public:
+	Apple(int i) {
+
+	}
+};
 
 int main(int argc, char* args[]) {
 	
@@ -31,6 +34,13 @@ int main(int argc, char* args[]) {
 	}else {
 		bool quit = false;								//程序退出flag
 		int status = 0;
+		//SDL加载后
+		Resource resource;								//加载纹理资源				
+		Keyboard keyboard;								//加载键盘事件类
+
+		//舞台初始化
+		TitlePage titlePage(resource);
+		GamePage gamePage(resource);
 
 		//程序主循环，当用户退出时结束
 		while (!quit){						
@@ -50,9 +60,10 @@ int main(int argc, char* args[]) {
 						break;
 					case GAMEPAGE: status = gamePage.onClick(x, y);
 						break;
-
-
 					}
+				}
+				if (event.type == SDL_KEYDOWN) {
+				TITLEPAGE:keyboard.onKeyPress(event.key.keysym.sym, status);
 				}
 			}
 			

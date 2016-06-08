@@ -55,10 +55,10 @@ SDL_Rect* StyleSheet::getChessPoint() {
 	//各个参数
 	int
 		count = 0,
-		pawnSize = 68,						//单个棋子大小
-		pawnMargin = 10,					//棋子之间的间距
-		areaMargin = 20,					//每个3*3区域之间的间距
-		boardMargin = 15,					//棋盘边缘和棋子的间距 - 棋子之间的间距
+		pawnSize = 70,						//单个棋子大小
+		pawnMargin = 9,						//棋子之间的间距
+		areaMargin = 12,					//每个3*3区域之间的间距
+		boardMargin = 20,					//棋盘边缘和棋子的间距 - 棋子之间的间距
 		prev_x = boardMargin,				//运算中间变量，上一个棋子的x偏移量
 		prev_y = boardMargin + pawnMargin;	//运算中间变量，上一个棋子的y偏移量
 	for (int i = 0; i < 3; i++){

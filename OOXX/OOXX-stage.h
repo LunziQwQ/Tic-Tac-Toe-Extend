@@ -1,18 +1,23 @@
 extern StyleSheet SS;
-extern Resource resource;
 
 class Stage {
 
 public:
+	Resource resource;
 	const int TITLEPAGE = 0;
 	const int GAMEPAGE = 1;
 	virtual int onClick(int x, int y) = 0;
+	virtual void onKeyPress(int keyCode) = 0;
 	virtual void load() = 0;
 	virtual void exit() = 0;
+
 };
 
 class TitlePage :public Stage {
 public:
+	TitlePage(Resource temp) {
+		resource = temp;
+	}
 
 	int onClick(int x, int y) {
 		int btnCode = onBtn(x, y);
@@ -22,11 +27,16 @@ public:
 			switch (btnCode){
 			case 1:
 				return GAMEPAGE;
+			case 2:
+				isInputStatus = true;
+				return TITLEPAGE;
 			}
 		}
-		
-
 		return TITLEPAGE;
+	}
+
+	void onKeyPress(int keyCode) {
+		
 	}
 
 	void load() {
@@ -42,6 +52,9 @@ public:
 		SDL_RenderCopy(gRenderer, resource.titlePage_btn0, NULL, &SS.titlePage_btns[0]);
 		SDL_RenderCopy(gRenderer, resource.titlePage_btn1, NULL, &SS.titlePage_btns[1]);
 		SDL_RenderCopy(gRenderer, resource.titlePage_btn2, NULL, &SS.titlePage_btns[2]);
+
+		if (isInputStatus)
+			showInput();
 		
 	}
 	void exit() {
@@ -55,6 +68,11 @@ public:
 		}
 		return 0;
 	}
+private:
+	bool isInputStatus = false;
+	void showInput() {
+			
+	}
 };
 
 
@@ -62,13 +80,16 @@ public:
  
 class GamePage :public Stage {
 public:
-
+	GamePage(Resource temp) {
+		resource = temp;
+		memset(chessStatus, 0, sizeof(chessStatus));
+	}
 	int onClick(int x, int y) {
 		int btnCode = onBtn(x, y);
 		printf("KEYCODE:%d\n", btnCode);
 		if (btnCode != 0) {
 			if (btnCode < 81) {
-				SDL_Rect item = SS.gamePage_chessPoint[btnCode - 1];
+				doStep(btnCode - 1, 1);	//下子位置与玩家编号
 				return GAMEPAGE;
 			}
 		}
@@ -77,14 +98,20 @@ public:
 	}
 	void load() {
 
-			//加载背景
+		//加载背景
+		SDL_RenderCopy(gRenderer, resource.gamePage_background, NULL, NULL);
+		for (int i = 0; i < 81; i++){
+			if (chessStatus[i] == 1)
+				SDL_RenderCopy(gRenderer, resource.chess_O, NULL, &SS.gamePage_chessPoint[i]);
+			if (chessStatus[i] == 2)
+				SDL_RenderCopy(gRenderer, resource.chess_X, NULL, &SS.gamePage_chessPoint[i]);
 
-			SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
-			SDL_RenderFillRects(gRenderer, SS.gamePage_chessPoint, 81);
-			SDL_SetTextureAlphaMod(gTexture, 0);
+		}
+		
 
 	}
 	void exit() {
+
 	}
 	int onBtn(int x, int y) {
 		for (int i = 0; i < 81; i++) {
@@ -94,5 +121,9 @@ public:
 		}
 		return 0;
 	}
-	
+private:
+	int chessStatus[81];
+	void doStep(int index, int player) {
+		chessStatus[index] = player;
+	}
 };
