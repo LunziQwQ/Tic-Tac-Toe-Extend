@@ -6,9 +6,9 @@ public:
 		loadTexture("resource/background.png");
 	SDL_Texture* gamePage_background =	//游戏页带棋盘的背景
 		loadTexture("resource/gamePage-02.png");
-	SDL_Texture* chess_O =
+	SDL_Texture* chess_O =				//O棋子
 		loadTexture("resource/Opic.png");
-	SDL_Texture* chess_X =
+	SDL_Texture* chess_X =				//X棋子
 		loadTexture("resource/Xpic.png");
 
 	//游戏所用到的字体资源纹理
@@ -61,5 +61,18 @@ public:
 	SDL_Texture* num_9 = renderText("9",
 			"ttf/consolab.ttf",
 			SS.black, 64, gRenderer); 
+
+	//通知窗口文字纹理
+	SDL_Texture* alert_PairCodeText =
+		renderText("Please input pair code:",
+			"ttf/consolab.ttf",
+			SS.black, 64, gRenderer);
+		
+private:
+	SDL_Texture* XXX() {
+		SDL_Texture* temp = NULL;
+		
+		return temp;
+	}
 };
 

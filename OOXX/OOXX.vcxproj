@@ -71,8 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>F:\Project\OOXX\SDL2_ttf-2.0.14\include;F:\Project\OOXX\SDL2_image-2.0.1\include;F:\Project\OOXX\SDL2-2.0.4\include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Project\OOXX\SDL2_ttf-2.0.14\lib\x86;F:\Project\OOXX\SDL2_image-2.0.1\lib\x86;F:\Project\OOXX\SDL2-2.0.4\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>F:\Project\C++\OOXX\SDL2_ttf-2.0.14\include;F:\Project\C++\OOXX\SDL2_image-2.0.1\include;F:\Project\C++\OOXX\SDL2-2.0.4\include;$(IncludePath)</IncludePath>
+    <LibraryPath>F:\Project\C++\OOXX\SDL2_ttf-2.0.14\lib\x86;F:\Project\C++\OOXX\SDL2_image-2.0.1\lib\x86;F:\Project\C++\OOXX\SDL2-2.0.4\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>

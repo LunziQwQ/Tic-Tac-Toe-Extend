@@ -20,13 +20,6 @@ const int TITLEPAGE = 0;
 const int GAMEPAGE = 1;
 
 
-class Apple {
-public:
-	Apple(int i) {
-
-	}
-};
-
 int main(int argc, char* args[]) {
 	
 	if (!init(SS)){										//验证SDL是否成功加载
@@ -63,7 +56,7 @@ int main(int argc, char* args[]) {
 					}
 				}
 				if (event.type == SDL_KEYDOWN) {
-				TITLEPAGE:keyboard.onKeyPress(event.key.keysym.sym, status);
+				//TITLEPAGE:keyboard.onKeyPress(event.key.keysym.sym, status);
 				}
 			}
 			
@@ -77,8 +70,12 @@ int main(int argc, char* args[]) {
 				break;
 
 			}
-				
-			
+			//Test
+			SDL_SetRenderDrawColor(gRenderer, 0x66, 0xCC, 0xFF, 0xFF);
+			SDL_RenderFillRect(gRenderer, &SS.common_musicSwitchBtn);//每个页面都存在的音乐开关
+
+
+
 			SDL_RenderPresent(gRenderer);				//渲染当前帧的纹理
 			SDL_RenderClear(gRenderer);					//清除上一帧的纹理
 			timer.fpsControl();							//帧数控制

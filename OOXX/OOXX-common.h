@@ -25,28 +25,36 @@ bool init(StyleSheet SS) {
 			printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());	//加载失败返回-1，获取报错信息
 			status = false;
 	}else{
+		printf("SDL success to initialize!\n");
+
 		gWindow = SDL_CreateWindow("Lunzi", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SS.SCREEN_WIDTH, SS.SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL) {
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			status = false;
 		}
 		else {
+			printf("Windows success to be created!\n");
+
 			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
 			if (gRenderer == NULL) {
 				printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
 				status = false;
 			}
 			else {
+				printf("Renderer success to be created!\n");
+
 				int imgFlags = IMG_INIT_PNG;
 				if (!(IMG_Init(imgFlags) & imgFlags)) {
 					printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
 					status = false;
 				}
 				else {
+					printf("SDL_image success to initialize!\n");
+
 					if (TTF_Init() != 0) {
 						printf("SDL_ttf could not initialize! SDL_image Error: %s\n", TTF_GetError());
 						status = false;
-					}
+					}else printf("SDL_ttf success to initialize!\n");
 					gScreenSurface = SDL_GetWindowSurface(gWindow);
 				}
 			}
