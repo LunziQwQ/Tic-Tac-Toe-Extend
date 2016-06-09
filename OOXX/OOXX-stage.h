@@ -6,7 +6,7 @@ public:
 	Resource resource;
 	const int TITLEPAGE = 0;
 	const int GAMEPAGE = 1;
-	virtual int onClick(int x, int y) = 0;
+	virtual int onClick(int x, int y) = 0;		//Music按钮统一btnCode为233
 	//virtual void onKeyPress(int keyCode) = 0;
 	virtual void load() = 0;
 	virtual void exit() = 0;
@@ -22,6 +22,10 @@ public:
 	int onClick(int x, int y) {
 		int btnCode = onBtn(x, y);	//获取btnCode，若不在按键上返回 0
 		printf("OnClick --> KEYCODE:%d\n", btnCode);
+		if (btnCode == 233) {
+//			switchMusic()
+			//TODO
+		}
 		if (btnCode != 0) {
 			if (isPairStatus) {
 				switch (btnCode) {
@@ -82,12 +86,15 @@ public:
 			if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
 				return i+1;
 		}
-		item = SS.alert_confirmBtn;	//若为确定按钮 keycode = 4
+		item = SS.alert_confirmBtn;		//若为确定按钮 keycode = 4
 		if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
 			return 4;
 		item = SS.alert_cancleBtn;		//若为取消按钮 keycode = 5
 		if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
 			return 5;
+		item = SS.common_musicSwitchBtn;		//若为music按钮 keycode = 233
+		if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
+			return 233;
 		return 0;
 	}
 private:
