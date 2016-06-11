@@ -1,4 +1,5 @@
-
+#ifndef _OOXX_SOCKETMANAGER_H
+#define _OOXX_SOCKETMANAGER_H
 #include <winsock2.h>
 #pragma comment(lib,"ws2_32.lib")
 
@@ -106,3 +107,5 @@ int SocketManager::receive(char * buf, int len){
 		return -1;
 	}
 }	
+
+#endif

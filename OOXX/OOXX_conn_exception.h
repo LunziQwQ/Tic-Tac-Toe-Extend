@@ -1,3 +1,6 @@
+#ifndef _OOXX_CONN_EXCEPTION_H
+#define _OOXX_CONN_EXCEPTION_H
+
 #include <string>
 #include <exception>
 
@@ -22,3 +25,5 @@ public:
 	~ConnException(){
 	}
 };
+
+#endif

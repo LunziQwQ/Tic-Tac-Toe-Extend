@@ -1,3 +1,6 @@
+#ifndef _OOXX_CONNECTION_H
+#define _OOXX_CONNECTION_H
+
 #include <cstdlib>
 #include <winsock2.h>
 #include <string>
@@ -208,3 +211,5 @@ bool Connection::makeConnect(const string &host, const string &service, const st
 	}
 	return true;
 }
+
+#endif
