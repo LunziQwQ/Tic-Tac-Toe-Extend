@@ -1,4 +1,6 @@
 extern StyleSheet SS;
+extern BIGBOX bigbox;
+extern SocketManager socketManager;
 
 class Stage {
 
@@ -11,7 +13,9 @@ public:
 	virtual void load() = 0;
 	virtual void exit() = 0;
 
+private:
 };
+
 
 class TitlePage :public Stage {
 public:
@@ -127,20 +131,20 @@ public:
 		printf("OnCLick --> KEYCODE:%d\n", btnCode);
 		if (btnCode != 0) {
 			if (btnCode < 81) {
-				doStep(btnCode - 1, 1);	//下子位置与玩家编号
+				doStep(btnCode - 1, bigbox.get_currentPlayer());	//下子位置与玩家编号(获取到的玩家编号）
 				return GAMEPAGE;
 			}
 		}
-		return TITLEPAGE;
+		return GAMEPAGE;
 	}
 	void load() {
 
 		//加载背景
 		SDL_RenderCopy(gRenderer, resource.gamePage_background, NULL, NULL);
 		for (int i = 0; i < 81; i++){
-			if (chessStatus[i] == 1)
+			if (chessStatus[i] == 1)		//玩家1
 				SDL_RenderCopy(gRenderer, resource.chess_O, NULL, &SS.gamePage_chessPoint[i]);
-			if (chessStatus[i] == 2)
+			if (chessStatus[i] == 2)		//玩家2
 				SDL_RenderCopy(gRenderer, resource.chess_X, NULL, &SS.gamePage_chessPoint[i]);
 
 		}
@@ -159,8 +163,19 @@ public:
 		return 0;
 	}
 private:
+	int gameStatus = 0;			//{0:游戏进行, 1 : 玩家1胜利, 2 : 玩家2胜利, 3 : 游戏结束和局}
 	int chessStatus[81];
 	void doStep(int index, int player) {
-		chessStatus[index] = player;
+		//检测该点是否能落子
+		if ( bigbox.fill((index + 1) / 9, (index + 1) % 9)) {
+			
+			//将坐标转换为字符串
+			char data[4];
+
+			//发送坐标的字符串数据
+			socketManager.sendMessage(itoa(index,data,10));
+			chessStatus[index] = player;
+		}
+		gameStatus = bigbox.get_bigWinner();
 	}
 };

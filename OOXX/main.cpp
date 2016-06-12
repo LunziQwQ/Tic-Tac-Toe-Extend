@@ -1,5 +1,6 @@
 #include "string"
 #include "cstring"
+#include "sstream"
 #include "stdio.h"
 #include "SDL.h"
 #include "SDL_image.h"
@@ -9,18 +10,34 @@
 #include "OOXX-timer.h"
 #include "OOXX-animation.h"
 #include "OOXX-resource.h"
-#include "OOXX-stage.h"
 #include "OOXX_keyboard.h"
+#include "MAX.h"
+#include "class_coor_3.h"
+#include "class_MIDBOX.h"
+#include "class_BigBox.h"
+#include "class_coor_9.h"
+#include "function.h"
+#include "OOXX_SocketManager.h"
+#include "OOXX-stage.h"
 
 StyleSheet SS;			//样式表类
 Timer timer;			//计时（帧）器类
 
+BIGBOX bigbox(1);
 
 const int TITLEPAGE = 0;
 const int GAMEPAGE = 1;
 
+std::string host("119.29.177.191");
+std::string service("4001");
+SocketManager socketManager(host, service);
+char buf[1000];
 
 int main(int argc, char* args[]) {
+
+	std::string code("code:12");
+	socketManager.link();
+	socketManager.sendMessage(code.data());
 	
 	if (!init(SS)){										//验证SDL是否成功加载
 		printf("Failed to initialize!\n");
@@ -34,6 +51,7 @@ int main(int argc, char* args[]) {
 		//舞台初始化
 		TitlePage titlePage(resource);
 		GamePage gamePage(resource);
+
 
 		//程序主循环，当用户退出时结束
 		while (!quit){						

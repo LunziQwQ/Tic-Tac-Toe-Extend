@@ -54,8 +54,10 @@ bool init(StyleSheet SS) {
 					if (TTF_Init() != 0) {
 						printf("SDL_ttf could not initialize! SDL_image Error: %s\n", TTF_GetError());
 						status = false;
-					}else printf("SDL_ttf success to initialize!\n");
-					gScreenSurface = SDL_GetWindowSurface(gWindow);
+					} else {
+						printf("SDL_ttf success to initialize!\n");
+						gScreenSurface = SDL_GetWindowSurface(gWindow);
+					}
 				}
 			}
 		}

@@ -108,7 +108,7 @@ void BIGBOX::set_currentPlayer(int player) {
 	currentPlayer = player;
 }
 //获取大棋盘的胜利者
-int BIGBOX::get_bitWinner() {
+int BIGBOX::get_bigWinner() {
 	return bigWinner;
 }
 

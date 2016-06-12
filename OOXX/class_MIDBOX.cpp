@@ -29,7 +29,7 @@ bool MIDBOX::get_isFull() {
 void MIDBOX::set_isFull(bool x) {
 	isFull = x;
 }
-//获取winner的值
+//获取winner的值 (0,1,2,3)
 int MIDBOX::get_winner() {
 	return winner;
 }

@@ -19,8 +19,8 @@ public:
 	//轮换当前玩家
 	void changePlayer(int currentplayer);
 
-	//获取大棋盘的胜利者
-	int get_bitWinner();
+	//获取大棋盘的胜利者	{0:游戏进行, 1:玩家1胜利, 2:玩家2胜利, 3:游戏结束和局}
+	int get_bigWinner();
 
 	//落子，成功返回true，不成功返回false
 	bool fill(int x, int y);
@@ -34,3 +34,8 @@ public:
 	//更新大棋盘战况
 	void upgradeBig();
 };
+
+/*
+返回一个　3*3　或　9 的状态数组
+9个MIDBOX的胜负状态
+*/

@@ -4,6 +4,12 @@
     <Filter Include="SDL">
       <UniqueIdentifier>{1fc4c861-2ef8-40b4-94d7-7ac7774b6177}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Logic">
+      <UniqueIdentifier>{b9990962-7c8d-464a-8bf9-13654a0c2516}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client">
+      <UniqueIdentifier>{47db201c-cef1-4174-9a62-9488864fbf57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OOXX-styleSheet.h">
@@ -27,8 +33,53 @@
     <ClInclude Include="OOXX_keyboard.h">
       <Filter>SDL</Filter>
     </ClInclude>
+    <ClInclude Include="OOXX-BGM.h">
+      <Filter>SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="class_BigBox.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="class_coor_3.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="class_coor_9.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="class_MIDBOX.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="function.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="MAX.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="OOXX_SocketManager.h">
+      <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="OOXX_connection.h">
+      <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="OOXX_conn_exception.h">
+      <Filter>Client</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="class_BIGBOX.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="class_COOR_3.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="class_COOR_9.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="class_MIDBOX.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="function.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
