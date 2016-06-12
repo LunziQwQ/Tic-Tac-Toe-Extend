@@ -10,6 +10,7 @@ public:
 		black = { 0x00, 0x00, 0x00, 0xFF },
 		white = { 0xFF, 0xFF, 0xFF, 0xFF },
 		Gray = { 0xC0,0xC0,0xC0 ,0xFF },
+		Brown = { 0x6D, 0x4d, 0x03, 0xFF },
 		TYblue = { 0x66, 0xCC, 0xFF, 0xFF };
 		
 		
@@ -26,9 +27,9 @@ public:
 		setRect(SCREEN_WIDTH*0.1, 100, SCREEN_WIDTH*0.8, SCREEN_HEIGHT*0.3),
 
 		titlePage_btns[3] = {	//首页按钮集
-		setRect(SCREEN_WIDTH*0.375, SCREEN_HEIGHT*0.5, SCREEN_WIDTH*0.25, 60),
-		setRect(SCREEN_WIDTH*0.375, SCREEN_HEIGHT*0.65, SCREEN_WIDTH*0.25, 60),
-		setRect(SCREEN_WIDTH*0.375, SCREEN_HEIGHT*0.8, SCREEN_WIDTH*0.25, 60),
+		setRect(SCREEN_WIDTH*0.5, SCREEN_HEIGHT*0.5, SCREEN_WIDTH*0.25, 60),
+		setRect(SCREEN_WIDTH*0.55, SCREEN_HEIGHT*0.65, SCREEN_WIDTH*0.25, 60),
+		setRect(SCREEN_WIDTH*0.6, SCREEN_HEIGHT*0.8, SCREEN_WIDTH*0.25, 60),
 	},
 
 
@@ -44,15 +45,15 @@ public:
 
 		//通知窗口******************
 		alert_alertPairCodeText =	//"请输入配对码"
-		setRect(SCREEN_WIDTH*0.15, SCREEN_HEIGHT*0.35, 400, 50),
+		setRect(SCREEN_WIDTH*0.18, SCREEN_HEIGHT*0.3, 400, 50),
 
 		*alert_PairCode = getPairCodeRects(),	//四个配对码
 
 		alert_confirmBtn =						//通知窗口确定按钮
-		setRect(SCREEN_WIDTH*0.77, SCREEN_HEIGHT*0.62, 100, 50),
+		setRect(SCREEN_WIDTH*0.56, SCREEN_HEIGHT*0.61, 100, 70),
 
 		alert_cancleBtn =						//通知窗口取消按钮
-		setRect(SCREEN_WIDTH*0.65, SCREEN_HEIGHT*0.62, 100, 50),
+		setRect(SCREEN_WIDTH*0.44, SCREEN_HEIGHT*0.61, 100, 70),
 
 
 		//通用**********************
@@ -60,7 +61,7 @@ public:
 		setRect(SCREEN_WIDTH-60, SCREEN_HEIGHT-60, 50, 50),
 
 		common_alertWindow =	//通用的通知窗口
-		setRect(SCREEN_WIDTH*0.1, SCREEN_HEIGHT*0.3, SCREEN_WIDTH*0.8, SCREEN_HEIGHT*0.4);
+		setRect(SCREEN_WIDTH*0.1, SCREEN_HEIGHT*0.2, SCREEN_WIDTH*0.8, SCREEN_HEIGHT*0.6);
 
 private:
 	SDL_Rect* getChessPointRects();
@@ -111,7 +112,7 @@ SDL_Rect* StyleSheet::getChessPointRects() {
 SDL_Rect* StyleSheet::getPairCodeRects() {
 	SDL_Rect* rects = new SDL_Rect[4];
 	for (int i = 0; i < 4; i++){
-		rects[i] = setRect(SCREEN_WIDTH*0.21+i*(50+SCREEN_WIDTH*0.11), SCREEN_HEIGHT*0.42, SCREEN_WIDTH*0.11, SCREEN_HEIGHT*0.18);
+		rects[i] = setRect(SCREEN_WIDTH*0.22+i*(30+SCREEN_WIDTH*0.08), SCREEN_HEIGHT*0.39, SCREEN_WIDTH*0.08, SCREEN_HEIGHT*0.16);
 	}
 	return rects;
 }

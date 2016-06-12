@@ -3,33 +3,28 @@ class Resource {
 public:
 	//游戏所用到的图片资源纹理
 	SDL_Texture* titlePage_background = //首页背景
-		loadTexture("resource/background.png");
+		loadTexture("resource/titlePageBG.png");
 	SDL_Texture* gamePage_background =	//游戏页带棋盘的背景
-		loadTexture("resource/gamePage-02.png");
+		loadTexture("resource/gamePageBG.png");
 	SDL_Texture* chess_O =				//O棋子
 		loadTexture("resource/Opic.png");
 	SDL_Texture* chess_X =				//X棋子
 		loadTexture("resource/Xpic.png");
+	SDL_Texture* titlePage_btn0 =		//首页的第一个棋子
+		loadTexture("resource/singleBtn.png");
+	SDL_Texture* titlePage_btn1 =		//首页的第二个棋子
+		loadTexture("resource/mulitBtn.png");
+	SDL_Texture* titlePage_btn2 =		//首页的第三个棋子
+		loadTexture("resource/helpBtn.png");
+	SDL_Texture* common_alert =			//通用的通知窗口
+		loadTexture("resource/alert.png");
+	SDL_Texture* common_yesBtn =		//通知窗口yes按钮
+		loadTexture("resource/yes.png");
+	SDL_Texture* common_noBtn =			//通知窗口no按钮
+		loadTexture("resource/no.png");
+
 
 	//游戏所用到的字体资源纹理
-	SDL_Texture* titlePage_btn0 = //首页三个按钮的文字
-		renderText("Single Play",
-			"ttf/consolab.ttf",
-			SS.black, 64, gRenderer);
-	SDL_Texture* titlePage_btn1 = 
-		renderText("Multi Play",
-			"ttf/consolab.ttf",
-			SS.black, 64, gRenderer);
-	SDL_Texture* titlePage_btn2 =
-		renderText("About us & Help",
-			"ttf/consolab.ttf",
-			SS.black, 64, gRenderer);
-
-	SDL_Texture* titlePage_title = //首页标题
-		renderText("OOXX Chess!",
-			"ttf/consolab.ttf",
-			SS.red, 256, gRenderer);
-
 	//数字0-9的纹理
 	SDL_Texture* num_0 = renderText("0",
 		"ttf/consolab.ttf",
@@ -66,7 +61,7 @@ public:
 	SDL_Texture* alert_PairCodeText =
 		renderText("Please input pair code:",
 			"ttf/consolab.ttf",
-			SS.black, 64, gRenderer);
+			SS.Brown, 64, gRenderer);
 		
 private:
 	SDL_Texture* XXX() {

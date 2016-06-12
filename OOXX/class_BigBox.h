@@ -34,8 +34,3 @@ public:
 	//更新大棋盘战况
 	void upgradeBig();
 };
-
-/*
-返回一个　3*3　或　9 的状态数组
-9个MIDBOX的胜负状态
-*/
