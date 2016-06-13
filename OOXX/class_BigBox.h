@@ -4,7 +4,7 @@
 class BIGBOX{
 private:
 	int bigWinner = 0;
-	int currentPlayer = 0;
+	int currentPlayer = 1;
 public:
 	BIGBOX(int player);
 

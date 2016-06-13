@@ -41,6 +41,7 @@ bool BIGBOX::fill(int x, int y) {
 		ban(temp_3.get_x(),temp_3.get_y());
 		printf("%d %d\n", temp_3.get_x(), temp_3.get_y());
 		printf("fill success %d\n",currentPlayer);
+		changePlayer(currentPlayer);
 		return true;
 	} else {
 		printf("%d\nfill false\n", Box[temp_3.get_BX()][temp_3.get_BY()].get_canFill());

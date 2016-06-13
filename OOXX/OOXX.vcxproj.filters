@@ -30,9 +30,6 @@
     <ClInclude Include="OOXX-resource.h">
       <Filter>SDL</Filter>
     </ClInclude>
-    <ClInclude Include="OOXX_keyboard.h">
-      <Filter>SDL</Filter>
-    </ClInclude>
     <ClInclude Include="OOXX-BGM.h">
       <Filter>SDL</Filter>
     </ClInclude>

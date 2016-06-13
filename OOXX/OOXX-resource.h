@@ -27,35 +27,35 @@ public:
 	//游戏所用到的字体资源纹理
 	//数字0-9的纹理
 	SDL_Texture* num_0 = renderText("0",
-		"ttf/consolab.ttf",
-		SS.black, 64, gRenderer);
+		"ttf/8bitlimit.ttf",
+		SS.Brown, 128, gRenderer);
 	SDL_Texture* num_1 = renderText("1",
-		"ttf/consolab.ttf",
-		SS.black, 64, gRenderer);
+		"ttf/8bitlimit.ttf",
+		SS.Brown, 128, gRenderer);
 	SDL_Texture* num_2 = renderText("2",
-		"ttf/consolab.ttf",
-		SS.black, 64, gRenderer);
+		"ttf/8bitlimit.ttf",
+		SS.Brown, 128, gRenderer);
 	SDL_Texture* num_3 = renderText("3",
-		"ttf/consolab.ttf",
-		SS.black, 64, gRenderer);
+		"ttf/8bitlimit.ttf",
+		SS.Brown, 128, gRenderer);
 	SDL_Texture* num_4 = renderText("4",
-		"ttf/consolab.ttf",
-		SS.black, 64, gRenderer);
+		"ttf/8bitlimit.ttf",
+		SS.Brown, 128, gRenderer);
 	SDL_Texture* num_5 = renderText("5",
-		"ttf/consolab.ttf",
-		SS.black, 64, gRenderer);
+		"ttf/8bitlimit.ttf",
+		SS.Brown, 128, gRenderer);
 	SDL_Texture* num_6 = renderText("6",
-		"ttf/consolab.ttf",
-		SS.black, 64, gRenderer);
+		"ttf/8bitlimit.ttf",
+		SS.Brown, 128, gRenderer);
 	SDL_Texture* num_7 = renderText("7",
-		"ttf/consolab.ttf",
-		SS.black, 64, gRenderer);
+		"ttf/8bitlimit.ttf",
+		SS.Brown, 128, gRenderer);
 	SDL_Texture* num_8 = renderText("8",
-		"ttf/consolab.ttf",
-		SS.black, 64, gRenderer);
+		"ttf/8bitlimit.ttf",
+		SS.Brown, 128, gRenderer);
 	SDL_Texture* num_9 = renderText("9",
-			"ttf/consolab.ttf",
-			SS.black, 64, gRenderer); 
+		"ttf/8bitlimit.ttf",
+		SS.Brown, 128, gRenderer);
 
 	//通知窗口文字纹理
 	SDL_Texture* alert_PairCodeText =

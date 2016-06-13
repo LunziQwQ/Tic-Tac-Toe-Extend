@@ -9,15 +9,12 @@ class Stage {
 public:
 	//提前声明构造方法的参数
 	Resource resource;			
-
-	//舞台编号定义
-	const int TITLEPAGE = 0;
-	const int GAMEPAGE = 1;
-
+	
 	//鼠标点击方法
 	virtual int onClick(int x, int y) = 0;		//Music按钮统一btnCode为233
 
-	//virtual void onKeyPress(int keyCode) = 0;
+	//键盘按键方法
+	virtual void onKeyPress(int keyCode) = 0;
 
 	//纹理渲染方法
 	virtual void load() = 0;
@@ -25,7 +22,18 @@ public:
 	//退出转场方法
 	virtual void exit() = 0;
 
-private:
+protected:
+	//舞台编号定义
+	const int TITLEPAGE = 0;
+	const int GAMEPAGE = 1;
+
+	//数字按键列表
+	SDL_Keycode numberKey[20] = {
+		SDLK_0, SDLK_1, SDLK_2, SDLK_3, SDLK_4,
+		SDLK_5, SDLK_6, SDLK_7, SDLK_8, SDLK_9,
+		SDLK_KP_0, SDLK_KP_1, SDLK_KP_2, SDLK_KP_3, SDLK_KP_4,
+		SDLK_KP_5, SDLK_KP_6, SDLK_KP_7, SDLK_KP_8, SDLK_KP_9,
+	};
 
 };
 
@@ -54,9 +62,15 @@ public:
 				switch (btnCode) {
 				case 4:
 					//do something onConfirmClick
+					if (pairCode[3] != -1) {	//已输入4位数字
+						sendPairCode();
+					} else {
+						//TODO 改变界面文字提醒输入完整
+					}
 					return TITLEPAGE;
 				case 5:
 					//do something onCancleClick
+					memset(pairCode, -1, sizeof(pairCode));
 					isPairStatus = false;
 					return TITLEPAGE;
 				}
@@ -79,8 +93,24 @@ public:
 	}
 
 	//按键方法
-	void onKeyPress(int keyCode) {
+	void onKeyPress(SDL_Keycode keycode) {
+
+		//检测是否输入为数字
+		int NumInput = -1;
+		for (int i = 0; i < 20; i++) {
+			if (keycode == numberKey[i])
+				NumInput = i % 10;
+		}
+		if (NumInput >= 0){
+			for (int i = 0; i < 4; i++){
+				if (pairCode[i] == -1) {
+					pairCode[i] = NumInput;
+					break;
+				}
+			}
+		}
 		
+
 	}
 
 	//渲染方法
@@ -93,8 +123,8 @@ public:
 		SDL_RenderCopy(gRenderer, resource.titlePage_btn1, NULL, &SS.titlePage_btns[1]);
 		SDL_RenderCopy(gRenderer, resource.titlePage_btn2, NULL, &SS.titlePage_btns[2]);
 		
-
-		if (isPairStatus) showInput();		//当点击多人游戏是打开输入配对码窗口
+		//当点击多人游戏是打开输入配对码窗口
+		if (isPairStatus) showInput();		
 		
 	}
 
@@ -126,15 +156,57 @@ private:
 	//是否点击了多人游戏按钮，是则弹出输出配对码窗口
 	bool isPairStatus = false;		
 
+	//临时存储
+	int pairCode[4] = {-1,-1,-1,-1};
+
 	//显示请输入配对码窗口
 	void showInput() {	
-
+		
 		SDL_RenderCopy(gRenderer, resource.common_alert, NULL, &SS.common_alertWindow);
 		SDL_RenderCopy(gRenderer, resource.alert_PairCodeText, NULL, &SS.alert_alertPairCodeText);
-
 		SDL_RenderCopy(gRenderer, resource.common_yesBtn, NULL, &SS.alert_confirmBtn);
 		SDL_RenderCopy(gRenderer, resource.common_noBtn, NULL, &SS.alert_cancleBtn);
-		SDL_RenderFillRects(gRenderer, SS.alert_PairCode, 4);
+		for (int i = 0; i < 4; i++){
+			if (pairCode[i] >= 0) {
+				switch (pairCode[i]){
+				case 0:
+					SDL_RenderCopy(gRenderer, resource.num_0, NULL, &SS.alert_PairCode[i]);
+					break;
+				case 1:
+					SDL_RenderCopy(gRenderer, resource.num_1, NULL, &SS.alert_PairCode[i]);
+					break;
+				case 2:
+					SDL_RenderCopy(gRenderer, resource.num_2, NULL, &SS.alert_PairCode[i]);
+					break;
+				case 3:
+					SDL_RenderCopy(gRenderer, resource.num_3, NULL, &SS.alert_PairCode[i]);
+					break;
+				case 4:
+					SDL_RenderCopy(gRenderer, resource.num_4, NULL, &SS.alert_PairCode[i]);
+					break;
+				case 5:
+					SDL_RenderCopy(gRenderer, resource.num_5, NULL, &SS.alert_PairCode[i]);
+					break;
+				case 6:
+					SDL_RenderCopy(gRenderer, resource.num_6, NULL, &SS.alert_PairCode[i]);
+					break;
+				case 7:
+					SDL_RenderCopy(gRenderer, resource.num_7, NULL, &SS.alert_PairCode[i]);
+					break;
+				case 8:
+					SDL_RenderCopy(gRenderer, resource.num_8, NULL, &SS.alert_PairCode[i]);
+					break;
+				case 9:
+					SDL_RenderCopy(gRenderer, resource.num_9, NULL, &SS.alert_PairCode[i]);
+					break;
+				}
+			}
+		}
+	}
+
+	void sendPairCode() {
+		std::string data = "";
+		//TODO 发送4位配对码到服务端
 	}
 };
 
@@ -150,7 +222,7 @@ public:
 		memset(chessStatus, 0, sizeof(chessStatus));
 	}
 
-	//按键方法
+	//点击方法
 	int onClick(int x, int y) {
 		int btnCode = onBtn(x, y);
 		printf("OnCLick --> KEYCODE:%d\n", btnCode);
@@ -160,7 +232,7 @@ public:
 				return GAMEPAGE;
 			}
 		}
-		return GAMEPAGE;
+		return TITLEPAGE;
 	}
 
 	//渲染方法
@@ -175,6 +247,11 @@ public:
 			if (chessStatus[i] == 2)		//玩家2
 				SDL_RenderCopy(gRenderer, resource.chess_X, NULL, &SS.gamePage_chessPoint[i]);
 		}
+	}
+
+	//按键方法
+	void onKeyPress(int keyCode) {
+
 	}
 
 	//舞台退出及转场方法
@@ -200,13 +277,13 @@ private:
 	void doStep(int index, int player) {
 
 		//检测该点是否能落子
-		if ( bigbox.fill((index + 1) / 9, (index + 1) % 9)) {
+		if ( bigbox.fill((index) / 9, (index) % 9)) {
 			
 			//将坐标转换为字符串
 			char data[4];
 
 			//向服务器端发送坐标的字符串数据
-			socketManager.sendMessage(itoa(index,data,10));
+			socketManager.sendMessage(itoa(index, data, 10));
 			chessStatus[index] = bigbox.get_currentPlayer();	//1或2
 		}
 

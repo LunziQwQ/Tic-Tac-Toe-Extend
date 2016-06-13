@@ -10,7 +10,6 @@
 #include "OOXX-timer.h"
 #include "OOXX-animation.h"
 #include "OOXX-resource.h"
-#include "OOXX_keyboard.h"
 #include "MAX.h"
 #include "class_coor_3.h"
 #include "class_MIDBOX.h"
@@ -53,7 +52,6 @@ int main(int argc, char* args[]) {
 		//需要等待SDL初始化完成后实例化的类
 
 		Resource resource;		//加载纹理资源				
-		Keyboard keyboard;		//加载键盘事件类
 
 		//舞台初始化
 		TitlePage titlePage(resource);
@@ -86,7 +84,12 @@ int main(int argc, char* args[]) {
 
 				//按键事件
 				if (event.type == SDL_KEYDOWN) {
-				//TITLEPAGE:keyboard.onKeyPress(event.key.keysym.sym, status);
+					switch (status){
+					case TITLEPAGE:
+						titlePage.onKeyPress(event.key.keysym.sym);
+						break;
+					}
+
 				}
 			}
 			

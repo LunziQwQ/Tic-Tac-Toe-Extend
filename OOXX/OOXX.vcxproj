@@ -169,7 +169,6 @@
     <ClInclude Include="OOXX-timer.h" />
     <ClInclude Include="OOXX_connection.h" />
     <ClInclude Include="OOXX_conn_exception.h" />
-    <ClInclude Include="OOXX_keyboard.h" />
     <ClInclude Include="OOXX_SocketManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
