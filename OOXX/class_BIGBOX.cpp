@@ -87,6 +87,7 @@ int BIGBOX::checkBigWinner() {
 	if (flag) {
 		winner = Box[wx][wy].get_winner();
 	}
+
 	return winner;
 }
 
@@ -118,5 +119,14 @@ void BIGBOX::changePlayer(int currentPlayer) {
 		this->currentPlayer = 2;
 	} else if (currentPlayer == 2) {
 		this->currentPlayer = 1;
+	}
+}
+
+void BIGBOX::reset_BIG(int player) {
+	currentPlayer = player;
+	for (int i = 0;i < MAX;i++) {
+		for (int j = 0;j < MAX;j++) {
+			Box[i][j].reset_MID();
+		}
 	}
 }

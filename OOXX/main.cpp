@@ -14,8 +14,6 @@
 #include "class_coor_3.h"
 #include "class_MIDBOX.h"
 #include "class_BigBox.h"
-#include "class_coor_9.h"
-#include "function.h"
 #include "OOXX_SocketManager.h"
 #include "OOXX-stage.h"
 

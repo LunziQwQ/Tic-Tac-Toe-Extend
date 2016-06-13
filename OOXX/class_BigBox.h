@@ -33,4 +33,7 @@ public:
 
 	//更新大棋盘战况
 	void upgradeBig();
+
+	//重置整个棋盘
+	void reset_BIG(int player);
 };

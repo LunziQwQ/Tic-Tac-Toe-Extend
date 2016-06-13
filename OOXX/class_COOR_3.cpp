@@ -1,4 +1,3 @@
-#include "class_COOR_9.h"
 #include "class_COOR_3.h"
 COOR_3::COOR_3() = default;
 COOR_3::COOR_3(int x, int y) {
@@ -13,18 +12,7 @@ COOR_3::COOR_3(int bx, int by, int x, int y) {
 	this->x = x;
 	this->y = y;
 }
-COOR_3::COOR_3(COOR_9 c9) {
-	BX = c9.x / MAX;
-	BY = c9.y / MAX;
-	x = c9.x % MAX;
-	y = c9.y % MAX;
-}
-void COOR_3::change_9_to_3(COOR_9 c9) {
-	BX = c9.x / MAX;
-	BY = c9.y / MAX;
-	x = c9.x % MAX;
-	y = c9.y % MAX;
-}
+
 void COOR_3::set_BX(int x) {
 	BX = x;
 }

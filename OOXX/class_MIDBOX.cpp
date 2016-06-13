@@ -98,6 +98,9 @@ void MIDBOX::checkSmallWinner() {
 	if (flag) {
 		winner = smallBox[wx][wy];
 	}
+	if (winner == 0 && !get_canFill()){
+		winner = 4;
+	}
 }
 
 bool MIDBOX::haveChess(int x, int y) {
@@ -107,4 +110,15 @@ bool MIDBOX::haveChess(int x, int y) {
 	}
 	printf("haveChess true\n");
 	return true;
+}
+
+void MIDBOX::reset_MID() {
+	canFill = true;
+	isFull = false;
+	winner = 0;
+	for (int i = 0;i < MAX;i++) {
+		for (int j = 0;j < MAX;j++) {
+			smallBox[i][j] = 0;
+		}
+	}
 }

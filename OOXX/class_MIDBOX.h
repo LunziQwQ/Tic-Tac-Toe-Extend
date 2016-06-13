@@ -42,4 +42,6 @@ public:
 
 //当前落子坐标是否已经有棋
 	bool haveChess(int x, int y);
+//重置中格子
+	void reset_MID();
 };  
