@@ -27,6 +27,7 @@ protected:
 	const int TITLEPAGE = 0;
 	const int GAMEPAGE = 1;
 
+	int mode = 0;	//0:单机模式  1:联机模式
 	//数字按键列表
 	SDL_Keycode numberKey[20] = {
 		SDLK_0, SDLK_1, SDLK_2, SDLK_3, SDLK_4,
@@ -37,7 +38,7 @@ protected:
 
 };
 
-//标题页面舞台
+//标题页面舞台-----------------------------------------------------------
 class TitlePage :public Stage {
 
 public:
@@ -64,6 +65,8 @@ public:
 					//do something onConfirmClick
 					if (pairCode[3] != -1) {	//已输入4位数字
 						sendPairCode();
+						mode = 1;
+						return GAMEPAGE;
 					} else {
 						//TODO 改变界面文字提醒输入完整
 					}
@@ -136,20 +139,24 @@ public:
 	//判定按键方法扩展
 	int onBtn(int x,int y) {
 		SDL_Rect item;
-		for (int i = 0; i < 3; i++) {
-			item = SS.titlePage_btns[i];
-			if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
-				return i+1;
+		if (!isPairStatus) {
+			for (int i = 0; i < 3; i++) {
+				item = SS.titlePage_btns[i];
+				if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
+					return i + 1;
+			}
 		}
-		item = SS.alert_confirmBtn;		//若为确定按钮 keycode = 4
-		if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
-			return 4;
-		item = SS.alert_cancleBtn;		//若为取消按钮 keycode = 5
-		if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
-			return 5;
-		item = SS.common_musicSwitchBtn;//若为music按钮 keycode = 233
-		if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
-			return 233;
+		if (isPairStatus) {
+			item = SS.alert_confirmBtn;		//若为确定按钮 keycode = 4
+			if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
+				return 4;
+			item = SS.alert_cancleBtn;		//若为取消按钮 keycode = 5
+			if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
+				return 5;
+			item = SS.common_musicSwitchBtn;//若为music按钮 keycode = 233
+			if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
+				return 233;
+		}
 		return 0;
 	}
 private:
@@ -161,7 +168,6 @@ private:
 
 	//显示请输入配对码窗口
 	void showInput() {	
-		
 		SDL_RenderCopy(gRenderer, resource.common_alert, NULL, &SS.common_alertWindow);
 		SDL_RenderCopy(gRenderer, resource.alert_PairCodeText, NULL, &SS.alert_alertPairCodeText);
 		SDL_RenderCopy(gRenderer, resource.common_yesBtn, NULL, &SS.alert_confirmBtn);
@@ -206,13 +212,22 @@ private:
 
 	void sendPairCode() {
 		std::string data = "";
+		for (int i = 0; i < 4; i++)	{
+			std::stringstream ss;
+			ss << pairCode[i];
+			std::string temp;
+			ss >> temp;
+			data += temp;
+		}
+		data = "code:" + data;
+		socketManager.sendMessage(data.c_str());
 		//TODO 发送4位配对码到服务端
 	}
 };
 
 
 
- //游戏页舞台
+ //游戏页舞台-----------------------------------------------------------------
 class GamePage :public Stage {
 
 public:
@@ -227,12 +242,12 @@ public:
 		int btnCode = onBtn(x, y);
 		printf("OnCLick --> KEYCODE:%d\n", btnCode);
 		if (btnCode != 0) {
-			if (btnCode < 81) {
+			if (btnCode <= 81) {
 				doStep(btnCode - 1, bigbox.get_currentPlayer());	//下子位置与玩家编号(获取到的玩家编号）
 				return GAMEPAGE;
 			}
 		}
-		return TITLEPAGE;
+		return GAMEPAGE;
 	}
 
 	//渲染方法
@@ -278,13 +293,17 @@ private:
 
 		//检测该点是否能落子
 		if ( bigbox.fill((index) / 9, (index) % 9)) {
-			
-			//将坐标转换为字符串
-			char data[4];
 
-			//向服务器端发送坐标的字符串数据
-			socketManager.sendMessage(itoa(index, data, 10));
-			chessStatus[index] = bigbox.get_currentPlayer();	//1或2
+			//若为联机模式追加数据发送
+			if (mode == 1) {
+
+				//将坐标转换为字符串
+				char data[4];
+
+				//向服务器端发送坐标的字符串数据
+				socketManager.sendMessage(itoa(index, data, 10));
+				chessStatus[index] = bigbox.get_currentPlayer();	//1或2
+			}
 		}
 
 		//询问当前游戏状态并保存

@@ -35,10 +35,9 @@ char buf[100];
 //主函数入口
 int main(int argc, char* args[]) {
 
-	//Test temp
-	std::string code("code:12");
+	//网络连接
 	socketManager.link();
-	socketManager.sendMessage(code.data());
+	printf("Network link success\n");
 	
 	//验证SDL是否成功加载
 	if (!init(SS)){										
