@@ -21,6 +21,7 @@
 StyleSheet SS;			//SDL————样式表类
 Timer timer;			//SDL————计时（帧）器类
 BIGBOX bigbox(1);		//Logic————大棋盘
+bool isMulti = false;
 
 //页面的编号定义
 const int TITLEPAGE = 0;
@@ -115,7 +116,16 @@ int main(int argc, char* args[]) {
 					4.  blue
 				*/
 				std::string resultString(buf);
+				if (resultString.find("red") != string::npos) {
+					bigbox.set_currentPlayer(1);
+				} else if (resultString.find("blue") != string::npos) {
+					bigbox.set_currentPlayer(2);
+				} else if (resultString.find("error") != string::npos) {
 
+				} else {
+					//接受远程玩家的坐标
+					gamePage.getMultiStep(resultString);
+				}
 			}
 
 

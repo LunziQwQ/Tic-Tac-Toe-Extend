@@ -2,6 +2,7 @@
 extern StyleSheet SS;
 extern BIGBOX bigbox;
 extern SocketManager socketManager;
+extern bool isMulti;
 
 //舞台接口类，定义每个舞台必须复写的方法
 class Stage {
@@ -27,7 +28,6 @@ protected:
 	const int TITLEPAGE = 0;
 	const int GAMEPAGE = 1;
 
-	int mode = 0;	//0:单机模式  1:联机模式
 	//数字按键列表
 	SDL_Keycode numberKey[20] = {
 		SDLK_0, SDLK_1, SDLK_2, SDLK_3, SDLK_4,
@@ -65,7 +65,8 @@ public:
 					//do something onConfirmClick
 					if (pairCode[3] != -1) {	//已输入4位数字
 						sendPairCode();
-						mode = 1;
+						isMulti = true;
+						isPairStatus = false;
 						return GAMEPAGE;
 					} else {
 						//TODO 改变界面文字提醒输入完整
@@ -284,6 +285,13 @@ public:
 		return 0;
 	}
 
+	void getMultiStep(std::string result) {
+		int index = atoi(result.c_str());
+		if (bigbox.fill((index) / 9, (index) % 9)) {
+			chessStatus[index] = bigbox.get_currentPlayer();
+		}
+	}
+
 private:
 	int gameStatus = 0;			//{0:游戏进行, 1 : 玩家1胜利, 2 : 玩家2胜利, 3 : 游戏结束和局}
 	int chessStatus[81];
@@ -295,15 +303,15 @@ private:
 		if ( bigbox.fill((index) / 9, (index) % 9)) {
 
 			//若为联机模式追加数据发送
-			if (mode == 1) {
+			if (isMulti) {
 
 				//将坐标转换为字符串
 				char data[4];
-
 				//向服务器端发送坐标的字符串数据
 				socketManager.sendMessage(itoa(index, data, 10));
-				chessStatus[index] = bigbox.get_currentPlayer();	//1或2
+				cout << data << endl;
 			}
+			chessStatus[index] = bigbox.get_currentPlayer();	//1或2
 		}
 
 		//询问当前游戏状态并保存
