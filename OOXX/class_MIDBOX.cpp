@@ -98,7 +98,7 @@ void MIDBOX::checkSmallWinner() {
 	if (flag) {
 		winner = smallBox[wx][wy];
 	}
-	if (winner == 0 && !get_isFull()){
+	if (winner == 0 && get_isFull()){
 		winner = 3;
 	}
 }
