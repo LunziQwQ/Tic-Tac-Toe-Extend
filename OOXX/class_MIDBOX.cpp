@@ -99,7 +99,7 @@ void MIDBOX::checkSmallWinner() {
 		winner = smallBox[wx][wy];
 	}
 	if (winner == 0 && !get_isFull()){
-		winner = 4;
+		winner = 3;
 	}
 }
 
