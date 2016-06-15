@@ -148,17 +148,13 @@
   <ItemGroup>
     <ClCompile Include="class_BIGBOX.cpp" />
     <ClCompile Include="class_COOR_3.cpp" />
-    <ClCompile Include="class_COOR_9.cpp" />
     <ClCompile Include="class_MIDBOX.cpp" />
-    <ClCompile Include="function.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="class_BigBox.h" />
     <ClInclude Include="class_coor_3.h" />
-    <ClInclude Include="class_coor_9.h" />
     <ClInclude Include="class_MIDBOX.h" />
-    <ClInclude Include="function.h" />
     <ClInclude Include="MAX.h" />
     <ClInclude Include="OOXX-BGM.h" />
     <ClInclude Include="OOXX-resource.h" />

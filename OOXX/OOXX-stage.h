@@ -3,6 +3,7 @@ extern StyleSheet SS;
 extern BIGBOX bigbox;
 extern SocketManager socketManager;
 extern bool isMulti;
+extern bool isFirst;
 
 //舞台接口类，定义每个舞台必须复写的方法
 class Stage {
@@ -52,10 +53,6 @@ public:
 		int btnCode = onBtn(x, y);	//获取btnCode，若不在按键上返回 0
 		printf("OnClick --> KEYCODE:%d\n", btnCode);
 
-		if (btnCode == 233) {
-			//switchMusic()
-			//TODO
-		}
 		if (btnCode != 0) {
 
 			//配对窗口存在时的点击事件
@@ -154,9 +151,6 @@ public:
 			item = SS.alert_cancleBtn;		//若为取消按钮 keycode = 5
 			if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
 				return 5;
-			item = SS.common_musicSwitchBtn;//若为music按钮 keycode = 233
-			if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
-				return 233;
 		}
 		return 0;
 	}

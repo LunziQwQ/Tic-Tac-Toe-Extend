@@ -22,6 +22,7 @@ StyleSheet SS;			//SDL————样式表类
 Timer timer;			//SDL————计时（帧）器类
 BIGBOX bigbox(1);		//Logic————大棋盘
 bool isMulti = false;
+bool isFirst = false;
 
 //页面的编号定义
 const int TITLEPAGE = 0;
@@ -101,25 +102,15 @@ int main(int argc, char* args[]) {
 				break;
 			}
 
-			//Test temp
-			SDL_SetRenderDrawColor(gRenderer, 0x66, 0xCC, 0xFF, 0xFF);
-			SDL_RenderFillRect(gRenderer, &SS.common_musicSwitchBtn);	//每个页面都存在的音乐开关
-
 			//Network define API
 			int count = socketManager.receive(buf, 100);
 			if (count>0)
 			{
-				/*
-					1.  传进去的下子信息 
-					2.  error:0
-					3.  red
-					4.  blue
-				*/
 				std::string resultString(buf);
 				if (resultString.find("red") != string::npos) {
-					bigbox.set_currentPlayer(1);
+					isFirst = true;
 				} else if (resultString.find("blue") != string::npos) {
-					bigbox.set_currentPlayer(2);
+					isFirst = false;
 				} else if (resultString.find("error") != string::npos) {
 
 				} else {

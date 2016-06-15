@@ -22,6 +22,7 @@ public:
 		loadTexture("resource/yes.png");
 	SDL_Texture* common_noBtn =			//通知窗口no按钮
 		loadTexture("resource/no.png");
+	//TODO:rednext 框，bluenext 框， 小标题，咖啡杯，Your turn
 
 
 	//游戏所用到的字体资源纹理

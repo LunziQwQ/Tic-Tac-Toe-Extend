@@ -39,13 +39,7 @@
     <ClInclude Include="class_coor_3.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="class_coor_9.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
     <ClInclude Include="class_MIDBOX.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="function.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="MAX.h">
@@ -69,13 +63,7 @@
     <ClCompile Include="class_COOR_3.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="class_COOR_9.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="class_MIDBOX.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="function.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>
