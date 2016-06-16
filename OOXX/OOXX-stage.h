@@ -259,12 +259,16 @@ public:
 			}else if (isAlertStatus && bigbox.get_bigWinner() != 0) {
 				if (btnCode == 99) {
 					isAlertStatus = false;
+					bigbox.reset_BIG(1);
+					memset(chessStatus, 0, sizeof(chessStatus));
 					return TITLEPAGE;
 				}
 			//触发了是否游戏结束Alert
 			}else if (isAlertStatus && bigbox.get_bigWinner() == 0) {
 				if (btnCode == 99) {
 					isAlertStatus = false;
+					bigbox.reset_BIG(1);
+					memset(chessStatus, 0, sizeof(chessStatus));
 					return TITLEPAGE;
 				}
 				if (btnCode == 98) {
