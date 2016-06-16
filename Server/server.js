@@ -55,10 +55,12 @@ server.on('connection',function (socket) {
 						otherSocket.write("red");
 						socket.write("blue");
 						gaming.push(socket.net_code);
+						console.log("color allocation");
 					}
 				});
 			}else{
 				socket.write("You can't use the code");
+				console.log("error:The code is used");
 			}
 		} else {
 			sockets.forEach(function (otherSocket) {
@@ -70,7 +72,7 @@ server.on('connection',function (socket) {
 	});
 	
 	socket.on('close',function () {
-		console.log('connection closed');
+		console.log('A connection closed');
 		sockets.forEach(function (otherSocket) {
 			if (otherSocket !== socket && otherSocket.net_code == socket.net_code){
 				otherSocket.write("error:your opponent is die");
