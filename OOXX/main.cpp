@@ -99,6 +99,14 @@ int main(int argc, char* args[]) {
 				break;
 			case GAMEPAGE:
 				gamePage.load();
+				//单机模式下，或为自己的回合时开启提示
+				if (!isMulti 
+					|| (isMulti && bigbox.get_currentPlayer()==1 && isFirst)
+					|| (isMulti && bigbox.get_currentPlayer() != 1 && !isFirst)) {
+					int x, y;
+					SDL_GetMouseState(&x, &y);
+					gamePage.onHover(x, y);
+				}
 				break;
 			}
 

@@ -235,13 +235,20 @@ public:
 	//点击方法
 	int onClick(int x, int y) {
 		int btnCode = onBtn(x, y);
-		printf("OnCLick --> KEYCODE:%d\n", btnCode);
-		if (btnCode != 0) {
-			if (btnCode <= 81) {
-				doStep(btnCode - 1, bigbox.get_currentPlayer());	//下子位置与玩家编号(获取到的玩家编号）
-				return GAMEPAGE;
+		
+			printf("OnCLick --> KEYCODE:%d\n", btnCode);
+			if (btnCode != 0) {
+				if (btnCode <= 81) {
+
+					if (!isMulti
+						|| (isMulti && bigbox.get_currentPlayer() == 1 && isFirst)
+						|| (isMulti && bigbox.get_currentPlayer() != 1 && !isFirst)) {
+
+						doStep(btnCode - 1, bigbox.get_currentPlayer());	//下子位置与玩家编号(获取到的玩家编号）
+						return GAMEPAGE;
+					}
+				}
 			}
-		}
 		return GAMEPAGE;
 	}
 
@@ -250,13 +257,30 @@ public:
 
 		//加载背景
 		SDL_RenderCopy(gRenderer, resource.gamePage_background, NULL, NULL);
-		for (int i = 0; i < 81; i++){
+		SDL_RenderCopy(gRenderer, resource.gamePage_title, NULL, &SS.gamePage_title);
+		SDL_RenderCopy(gRenderer, resource.gamePage_nowTurn, NULL, &SS.gamePage_nowTurn); 
+		SDL_RenderCopy(gRenderer, resource.gamePage_coffeeCup, NULL, &SS.gamePage_cup);
+		if (bigbox.get_currentPlayer() == 1)
+			SDL_RenderCopy(gRenderer, resource.chess_X, NULL, &SS.gamePage_nowTurnIMG);
+		else
+			SDL_RenderCopy(gRenderer, resource.chess_O, NULL, &SS.gamePage_nowTurnIMG);
 
+		for (int i = 0; i < 81; i++){
 			if (chessStatus[i] == 1)		//玩家1
 				SDL_RenderCopy(gRenderer, resource.chess_O, NULL, &SS.gamePage_chessPoint[i]);
 			if (chessStatus[i] == 2)		//玩家2
 				SDL_RenderCopy(gRenderer, resource.chess_X, NULL, &SS.gamePage_chessPoint[i]);
 		}
+
+		showWhereCanFill();
+		showMidBoxStatus();
+		
+
+		if (bigbox.get_bigWinner() != 0) {	//游戏出现结果
+			SDL_RenderCopy(gRenderer, resource.common_alert, NULL, &SS.common_alertWindow);
+
+		}
+
 	}
 
 	//按键方法
@@ -286,9 +310,46 @@ public:
 		}
 	}
 
+	//当鼠标在可落子区域时提示对手下一步的可落子区域    喵喵喵喵喵*****************************************
+	void onHover(int x, int y) {
+		int btnCode = onBtn(x, y);
+		if (btnCode != 0) {
+			int index = (btnCode - 1) / 9 % 3 * 3 + (btnCode - 1) % 9 % 3;
+			COOR_3 temp((btnCode - 1) / 9, (btnCode - 1) % 9);
+			if (bigbox.Box[temp.get_BX()][temp.get_BY()].get_canFill()
+				&& !bigbox.Box[temp.get_BX()][temp.get_BY()].haveChess(temp.get_x(),temp.get_y())) {	//当前鼠标位置可落子
+
+				if (bigbox.Box[index / 3][index % 3].get_winner() == 0) {	//映射midBox可落子
+
+					if (bigbox.get_currentPlayer() == 1)
+						SDL_RenderCopy(gRenderer, resource.gamePage_blueNext, NULL, &SS.gamePage_midBox[index]);
+					else
+						SDL_RenderCopy(gRenderer, resource.gamePage_redNext, NULL, &SS.gamePage_midBox[index]);
+
+				} else {
+
+					for (int i = 0; i < 9; i++) {
+						if (bigbox.Box[i / 3][i % 3].get_winner() == 0) {
+
+							if (bigbox.get_currentPlayer() == 1)
+								SDL_RenderCopy(gRenderer, resource.gamePage_blueNext, NULL, &SS.gamePage_midBox[i]);
+							else
+								SDL_RenderCopy(gRenderer, resource.gamePage_redNext, NULL, &SS.gamePage_midBox[i]);
+
+						}
+					}
+
+				}
+
+			}
+		}
+	}
+
+
 private:
 	int gameStatus = 0;			//{0:游戏进行, 1 : 玩家1胜利, 2 : 玩家2胜利, 3 : 游戏结束和局}
 	int chessStatus[81];
+
 
 	//落子方法，
 	void doStep(int index, int player) {
@@ -311,4 +372,28 @@ private:
 		//询问当前游戏状态并保存
 		gameStatus = bigbox.get_bigWinner();
 	}
+
+	//显示可落子的区域 半透明色块
+	void showWhereCanFill() {
+		for (int i = 0; i < 9; i++){
+			if (bigbox.Box[i / 3][i % 3].get_canFill()) {
+				SDL_RenderCopy(gRenderer, resource.gamePage_canFill, NULL, &SS.gamePage_midBox[i]);
+			}
+		}
+	}
+
+	//显示MIDBOX战果
+	void showMidBoxStatus() {
+		for (int i = 0; i < 9; i++){
+			if (bigbox.Box[i / 3][i % 3].get_winner() == 1)
+				SDL_RenderCopy(gRenderer, resource.chess_X, NULL, &SS.gamePage_midBox[i]);
+			if (bigbox.Box[i / 3][i % 3].get_winner() == 2)
+				SDL_RenderCopy(gRenderer, resource.chess_O, NULL, &SS.gamePage_midBox[i]);
+			//if (bigbox.Box[i / 3][i % 3].get_winner() == 3)
+				//TODO 和棋时MIDBOX的状态
+
+		}
+	}
+
+
 };

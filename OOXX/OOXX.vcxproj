@@ -156,7 +156,6 @@
     <ClInclude Include="class_coor_3.h" />
     <ClInclude Include="class_MIDBOX.h" />
     <ClInclude Include="MAX.h" />
-    <ClInclude Include="OOXX-BGM.h" />
     <ClInclude Include="OOXX-resource.h" />
     <ClInclude Include="OOXX-animation.h" />
     <ClInclude Include="OOXX-common.h" />

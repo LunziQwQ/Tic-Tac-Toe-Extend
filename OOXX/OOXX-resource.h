@@ -22,10 +22,29 @@ public:
 		loadTexture("resource/yes.png");
 	SDL_Texture* common_noBtn =			//通知窗口no按钮
 		loadTexture("resource/no.png");
+	SDL_Texture* gamePage_title =		//游戏页右上小标题
+		loadTexture("resource/smallTitle.png");
+	SDL_Texture* gamePage_coffeeCup =	//游戏页右下咖啡杯
+		loadTexture("resource/coffeeCup.png");
+	SDL_Texture* gamePage_blueNext =	//蓝色next指示框
+		loadTexture("resource/blueNext.png");
+	SDL_Texture* gamePage_redNext =		//红色next指示框
+		loadTexture("resource/redNext.png");
+	SDL_Texture* gamePage_canFill = 
+		loadTexture("resource/canFill.png");
+	SDL_BlendMode blending;
+	int blendStatus = SDL_SetTextureBlendMode(gamePage_canFill, blending);
+	int AlphaStatus = SDL_SetTextureAlphaMod(gamePage_canFill, 80);
 	//TODO:rednext 框，bluenext 框， 小标题，咖啡杯，Your turn
 
 
-	//游戏所用到的字体资源纹理
+	//游戏所用到的字体资源纹理-------------------------------
+
+	//游戏页右侧 NowTurn 字样
+	SDL_Texture* gamePage_nowTurn =	renderText("Now Turn",
+		"ttf/8bitlimit.ttf",
+		SS.Brown, 128, gRenderer);
+
 	//数字0-9的纹理
 	SDL_Texture* num_0 = renderText("0",
 		"ttf/8bitlimit.ttf",
@@ -58,12 +77,12 @@ public:
 		"ttf/8bitlimit.ttf",
 		SS.Brown, 128, gRenderer);
 
-	//通知窗口文字纹理
+	//通知窗口文字纹理--------------------
 	SDL_Texture* alert_PairCodeText =
 		renderText("Please input pair code:",
 			"ttf/consolab.ttf",
 			SS.Brown, 64, gRenderer);
-		
+	
 private:
 	SDL_Texture* XXX() {
 		SDL_Texture* temp = NULL;
