@@ -42,6 +42,7 @@ bool BIGBOX::fill(int x, int y) {
 		printf("%d %d\n", temp_3.get_x(), temp_3.get_y());
 		printf("fill success %d\n",currentPlayer);
 		changePlayer(currentPlayer);
+		upgradeBig();
 		return true;
 	} else {
 		printf("%d\nfill false\n", Box[temp_3.get_BX()][temp_3.get_BY()].get_canFill());
@@ -85,7 +86,7 @@ int BIGBOX::checkBigWinner() {
 		}
 	}
 	if (flag) {
-		winner = Box[wx][wy].get_winner();
+		bigWinner = Box[wx][wy].get_winner();
 	}
 
 	return winner;
@@ -124,6 +125,7 @@ void BIGBOX::changePlayer(int currentPlayer) {
 
 void BIGBOX::reset_BIG(int player) {
 	currentPlayer = player;
+	bigWinner = 0;
 	for (int i = 0;i < MAX;i++) {
 		for (int j = 0;j < MAX;j++) {
 			Box[i][j].reset_MID();
