@@ -88,6 +88,10 @@ public:
 				case 2:
 					isAlertStatus = true;
 					return TITLEPAGE;
+				case 3:
+					system("explorer \"https://github.com/LunziQwQ/OOXXChessGame-bySDL\" ");
+					return TITLEPAGE;
+
 				}
 			}
 		}
