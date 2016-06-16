@@ -1,5 +1,5 @@
 /**
- * Created by oooooo on 2016/6/5.
+ * Created by XX on 2016/6/5.
  */
 
 var net=require('net');
@@ -46,7 +46,7 @@ server.on('connection',function (socket) {
 					}
 				});
 				var index1=gaming.indexOf(socket.net_code);
-				gaming.splice(index,1);
+				gaming.splice(index1,1);
 
 				socket.net_code=temp;
 
