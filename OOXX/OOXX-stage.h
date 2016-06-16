@@ -29,6 +29,9 @@ protected:
 	const int TITLEPAGE = 0;
 	const int GAMEPAGE = 1;
 
+	//是否开启了通知窗口
+	bool isAlertStatus = false;
+
 	//数字按键列表
 	SDL_Keycode numberKey[20] = {
 		SDLK_0, SDLK_1, SDLK_2, SDLK_3, SDLK_4,
@@ -56,23 +59,23 @@ public:
 		if (btnCode != 0) {
 
 			//配对窗口存在时的点击事件
-			if (isPairStatus) {
+			if (isAlertStatus) {
 				switch (btnCode) {
 				case 4:
-					//do something onConfirmClick
 					if (pairCode[3] != -1) {	//已输入4位数字
 						sendPairCode();
 						isMulti = true;
-						isPairStatus = false;
+						isAlertStatus = false;
 						return GAMEPAGE;
 					} else {
-						//TODO 改变界面文字提醒输入完整
+						memset(pairCode, -1, sizeof(pairCode));
+						isAlertStatus = false;
+						return TITLEPAGE;
 					}
 					return TITLEPAGE;
 				case 5:
-					//do something onCancleClick
 					memset(pairCode, -1, sizeof(pairCode));
-					isPairStatus = false;
+					isAlertStatus = false;
 					return TITLEPAGE;
 				}
 			}
@@ -83,7 +86,7 @@ public:
 				case 1:
 					return GAMEPAGE;
 				case 2:
-					isPairStatus = true;
+					isAlertStatus = true;
 					return TITLEPAGE;
 				}
 			}
@@ -125,7 +128,7 @@ public:
 		SDL_RenderCopy(gRenderer, resource.titlePage_btn2, NULL, &SS.titlePage_btns[2]);
 		
 		//当点击多人游戏是打开输入配对码窗口
-		if (isPairStatus) showInput();		
+		if (isAlertStatus) showInput();
 		
 	}
 
@@ -137,14 +140,14 @@ public:
 	//判定按键方法扩展
 	int onBtn(int x,int y) {
 		SDL_Rect item;
-		if (!isPairStatus) {
+		if (!isAlertStatus) {
 			for (int i = 0; i < 3; i++) {
 				item = SS.titlePage_btns[i];
 				if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
 					return i + 1;
 			}
 		}
-		if (isPairStatus) {
+		if (isAlertStatus) {
 			item = SS.alert_confirmBtn;		//若为确定按钮 keycode = 4
 			if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
 				return 4;
@@ -156,7 +159,6 @@ public:
 	}
 private:
 	//是否点击了多人游戏按钮，是则弹出输出配对码窗口
-	bool isPairStatus = false;		
 
 	//临时存储
 	int pairCode[4] = {-1,-1,-1,-1};
@@ -235,9 +237,10 @@ public:
 	//点击方法
 	int onClick(int x, int y) {
 		int btnCode = onBtn(x, y);
-		
-			printf("OnCLick --> KEYCODE:%d\n", btnCode);
-			if (btnCode != 0) {
+		printf("OnCLick --> KEYCODE:%d\n", btnCode);
+		if (btnCode != 0) {
+			//正常游戏状态
+			if (!isAlertStatus && bigbox.get_bigWinner() == 0) {
 				if (btnCode <= 81) {
 
 					if (!isMulti
@@ -248,7 +251,29 @@ public:
 						return GAMEPAGE;
 					}
 				}
+				if (btnCode == 100) {
+					isAlertStatus = true;
+				}
+
+			//触发了游戏结束，弹出结算Alert
+			}else if (isAlertStatus && bigbox.get_bigWinner() != 0) {
+				if (btnCode == 99) {
+					isAlertStatus = false;
+					return TITLEPAGE;
+				}
+			//触发了是否游戏结束Alert
+			}else if (isAlertStatus && bigbox.get_bigWinner() == 0) {
+				if (btnCode == 99) {
+					isAlertStatus = false;
+					return TITLEPAGE;
+				}
+				if (btnCode == 98) {
+					isAlertStatus = false;
+					return GAMEPAGE;
+				}
+
 			}
+		}
 		return GAMEPAGE;
 	}
 
@@ -260,10 +285,12 @@ public:
 		SDL_RenderCopy(gRenderer, resource.gamePage_title, NULL, &SS.gamePage_title);
 		SDL_RenderCopy(gRenderer, resource.gamePage_nowTurn, NULL, &SS.gamePage_nowTurn); 
 		SDL_RenderCopy(gRenderer, resource.gamePage_coffeeCup, NULL, &SS.gamePage_cup);
+
+		//右侧 NowTurn 区域图片
 		if (bigbox.get_currentPlayer() == 1)
-			SDL_RenderCopy(gRenderer, resource.chess_X, NULL, &SS.gamePage_nowTurnIMG);
+			SDL_RenderCopy(gRenderer, resource.chess_BX, NULL, &SS.gamePage_nowTurnIMG);
 		else
-			SDL_RenderCopy(gRenderer, resource.chess_O, NULL, &SS.gamePage_nowTurnIMG);
+			SDL_RenderCopy(gRenderer, resource.chess_BO, NULL, &SS.gamePage_nowTurnIMG);
 
 		for (int i = 0; i < 81; i++){
 			if (chessStatus[i] == 1)		//玩家1
@@ -272,13 +299,33 @@ public:
 				SDL_RenderCopy(gRenderer, resource.chess_X, NULL, &SS.gamePage_chessPoint[i]);
 		}
 
-		showWhereCanFill();
+		if (!isMulti						
+			|| (isMulti && bigbox.get_currentPlayer() == 1 && isFirst)
+			|| (isMulti && bigbox.get_currentPlayer() != 1 && !isFirst)) {
+			showWhereCanFill();			
+		}
+
 		showMidBoxStatus();
 		
-
 		if (bigbox.get_bigWinner() != 0) {	//游戏出现结果
+			isAlertStatus = true;
 			SDL_RenderCopy(gRenderer, resource.common_alert, NULL, &SS.common_alertWindow);
+			SDL_RenderCopy(gRenderer, resource.common_yesBtn, NULL, &SS.alert_confirmBtn);
 
+			if (bigbox.get_bigWinner() == 1)
+				SDL_RenderCopy(gRenderer, resource.alert_redWin, NULL, &SS.alert_gameOver);
+			if (bigbox.get_bigWinner() == 2)
+				SDL_RenderCopy(gRenderer, resource.alert_blueWin, NULL, &SS.alert_gameOver);
+			if (bigbox.get_bigWinner() == 3)
+				SDL_RenderCopy(gRenderer, resource.alert_drawing, NULL, &SS.alert_gameOver);
+		}
+		//点击了是否退出Aleat
+		if (bigbox.get_bigWinner() == 0 && isAlertStatus) {
+			SDL_RenderCopy(gRenderer, resource.common_alert, NULL, &SS.common_alertWindow);
+			SDL_RenderCopy(gRenderer, resource.common_yesBtn, NULL, &SS.alert_confirmBtn);
+			SDL_RenderCopy(gRenderer, resource.common_noBtn, NULL, &SS.alert_cancleBtn);
+			SDL_RenderCopy(gRenderer, resource.alert_wantExit, NULL, &SS.alert_wantExit);
+			SDL_RenderCopy(gRenderer, resource.alert_willLose, NULL, &SS.alert_willLose);
 		}
 
 	}
@@ -295,10 +342,30 @@ public:
 
 	//判定点击位置方法 return BtnCode
 	int onBtn(int x, int y) {
-		for (int i = 0; i < 81; i++) {
-			SDL_Rect item = SS.gamePage_chessPoint[i];
+		//正常游戏状态
+		if (!isAlertStatus && bigbox.get_bigWinner() == 0) {
+			for (int i = 0; i < 81; i++) {
+				SDL_Rect item = SS.gamePage_chessPoint[i];
+				if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
+					return i + 1;
+			}
+			SDL_Rect item = SS.gamePage_title;
 			if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
-				return i + 1;
+				return 100;	//弹出alert是否退出主菜单
+
+		//触发了游戏结束，弹出结算Alert
+		} else if(isAlertStatus && bigbox.get_bigWinner() != 0){
+			SDL_Rect item = SS.alert_confirmBtn;
+			if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
+				return 99;	//点击确定
+		//触发了是否游戏结束Alert
+		} else if (isAlertStatus && bigbox.get_bigWinner() == 0) {
+			SDL_Rect item = SS.alert_confirmBtn;
+			if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
+				return 99;	//点击确定
+			item = SS.alert_cancleBtn;
+			if (!(x<item.x || x>(item.x + item.w) || y<item.y || y>(item.y + item.h)))
+				return 98;	//点击取消
 		}
 		return 0;
 	}
@@ -386,9 +453,9 @@ private:
 	void showMidBoxStatus() {
 		for (int i = 0; i < 9; i++){
 			if (bigbox.Box[i / 3][i % 3].get_winner() == 1)
-				SDL_RenderCopy(gRenderer, resource.chess_X, NULL, &SS.gamePage_midBox[i]);
+				SDL_RenderCopy(gRenderer, resource.chess_BX, NULL, &SS.gamePage_midBox[i]);
 			if (bigbox.Box[i / 3][i % 3].get_winner() == 2)
-				SDL_RenderCopy(gRenderer, resource.chess_O, NULL, &SS.gamePage_midBox[i]);
+				SDL_RenderCopy(gRenderer, resource.chess_BO, NULL, &SS.gamePage_midBox[i]);
 			//if (bigbox.Box[i / 3][i % 3].get_winner() == 3)
 				//TODO 和棋时MIDBOX的状态
 

@@ -105,10 +105,10 @@ void MIDBOX::checkSmallWinner() {
 
 bool MIDBOX::haveChess(int x, int y) {
 	if (get_smallBox(x, y) == 0) {
-		printf("haveChess false\n");
+		//printf("haveChess false\n");
 		return false;
 	}
-	printf("haveChess true\n");
+	//printf("haveChess true\n");
 	return true;
 }
 

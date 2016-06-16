@@ -127,6 +127,12 @@ int main(int argc, char* args[]) {
 				}
 			}
 
+			//Test
+			
+
+
+
+
 
 			SDL_RenderPresent(gRenderer);	//渲染当前帧的纹理
 			SDL_RenderClear(gRenderer);		//清除上一帧的纹理

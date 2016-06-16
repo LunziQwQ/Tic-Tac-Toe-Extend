@@ -10,6 +10,10 @@ public:
 		loadTexture("resource/Opic.png");
 	SDL_Texture* chess_X =				//X棋子
 		loadTexture("resource/Xpic.png");
+	SDL_Texture* chess_BO =				//放大的带有阴影的O棋子
+		loadTexture("resource/Opic.png");
+	SDL_Texture* chess_BX =				//放大的带有阴影的X棋子
+		loadTexture("resource/BX.png");
 	SDL_Texture* titlePage_btn0 =		//首页的第一个棋子
 		loadTexture("resource/singleBtn.png");
 	SDL_Texture* titlePage_btn1 =		//首页的第二个棋子
@@ -45,6 +49,8 @@ public:
 		"ttf/8bitlimit.ttf",
 		SS.Brown, 128, gRenderer);
 
+	
+
 	//数字0-9的纹理
 	SDL_Texture* num_0 = renderText("0",
 		"ttf/8bitlimit.ttf",
@@ -79,10 +85,26 @@ public:
 
 	//通知窗口文字纹理--------------------
 	SDL_Texture* alert_PairCodeText =
-		renderText("Please input pair code:",
-			"ttf/consolab.ttf",
+		renderText("Please  input  pair  code",
+			"ttf/MindAntiks.ttf",
 			SS.Brown, 64, gRenderer);
-	
+	SDL_Texture* alert_wantExit =
+		renderText("Do you want to leave?",
+			"ttf/MindAntiks.ttf",
+			SS.Brown, 64, gRenderer);
+	SDL_Texture* alert_willLose =
+		renderText("You will lose the status.",
+			"ttf/MindAntiks.ttf",
+			SS.Brown, 64, gRenderer);
+	SDL_Texture* alert_redWin = renderText("Red Win",
+		"ttf/8bitlimit.ttf",
+		SS.red, 256, gRenderer);
+	SDL_Texture* alert_blueWin = renderText("Blue Win",
+		"ttf/8bitlimit.ttf",
+		SS.TYblue, 256, gRenderer);
+	SDL_Texture* alert_drawing = renderText("Drawing",
+		"ttf/8bitlimit.ttf",
+		SS.Green, 256, gRenderer);
 private:
 	SDL_Texture* XXX() {
 		SDL_Texture* temp = NULL;

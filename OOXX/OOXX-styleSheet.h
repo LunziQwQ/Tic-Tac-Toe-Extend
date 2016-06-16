@@ -52,11 +52,17 @@ public:
 		setRect(SCREEN_WIDTH*0.78, 250, SCREEN_WIDTH*0.21, 40),
 
 		gamePage_nowTurnIMG =	//游戏页右侧中间 当前回合棋子 图片
-		setRect(SCREEN_WIDTH*0.78-5, 300, SCREEN_WIDTH*0.21, 160),
+		setRect(SCREEN_WIDTH*0.8, 305, 160, 160),
 
 		//通知窗口******************
 		alert_alertPairCodeText =	//"请输入配对码"
 		setRect(SCREEN_WIDTH*0.18, SCREEN_HEIGHT*0.3, 400, 50),
+
+		alert_wantExit =	//"你想要退出么？"
+		setRect(SCREEN_WIDTH*0.22, SCREEN_HEIGHT*0.32, 400, 60),
+
+		alert_willLose =	//"你会失去当前状态"
+		setRect(SCREEN_WIDTH*0.18, SCREEN_HEIGHT*0.46, 500, 60),
 
 		*alert_PairCode = getPairCodeRects(),	//四个配对码
 
@@ -65,6 +71,9 @@ public:
 
 		alert_cancleBtn =						//通知窗口取消按钮
 		setRect(SCREEN_WIDTH*0.44, SCREEN_HEIGHT*0.61, 100, 70),
+
+		alert_gameOver =							//红方胜利文本
+		setRect(SCREEN_WIDTH*0.18, SCREEN_HEIGHT*0.31, SCREEN_WIDTH *0.5, SCREEN_HEIGHT*0.25),
 
 
 		//通用**********************
