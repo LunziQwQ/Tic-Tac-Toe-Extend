@@ -11,7 +11,7 @@ var sockets=[];
 var gaming=[];
 
 server.on('connection',function (socket) {
-	console.log('got a new connection');
+	console.log('got a new connection'+"   "+Date());
 
 	socket.net_code=0;
 
@@ -19,7 +19,7 @@ server.on('connection',function (socket) {
 	
 	socket.on('data',function (data) {
 
-		console.log('got data:',data);
+		console.log('got data:'+data+"   "+Date());
 
 		if(data.indexOf("code:")!==-1){
 
@@ -42,7 +42,7 @@ server.on('connection',function (socket) {
 
 				sockets.forEach(function (otherSocket) {
 					if (otherSocket !== socket && otherSocket.net_code == socket.net_code){
-						otherSocket.write("error:your opponent is die");
+						otherSocket.write("error:1");
 					}
 				});
 				var index1=gaming.indexOf(socket.net_code);
@@ -55,10 +55,12 @@ server.on('connection',function (socket) {
 						otherSocket.write("red");
 						socket.write("blue");
 						gaming.push(socket.net_code);
+						console.log("color allocation"+"   "+Date());
 					}
 				});
 			}else{
-				socket.write("You can't use the code");
+				socket.write("error:0");
+				console.log("error:The code is used"+"   "+Date());
 			}
 		} else {
 			sockets.forEach(function (otherSocket) {
@@ -70,10 +72,10 @@ server.on('connection',function (socket) {
 	});
 	
 	socket.on('close',function () {
-		console.log('connection closed');
+		console.log('A connection closed'+"   "+Date());
 		sockets.forEach(function (otherSocket) {
 			if (otherSocket !== socket && otherSocket.net_code == socket.net_code){
-				otherSocket.write("error:your opponent is die");
+				otherSocket.write("error:1");
 			}
 		});
 		var index1=gaming.indexOf(socket.net_code);
@@ -83,7 +85,7 @@ server.on('connection',function (socket) {
 	});
 
 	socket.on('error',function (err) {
-		console.log("error:",err.message);
+		console.log("error:"+err.message+"   "+Date());
 	});
 });
 
