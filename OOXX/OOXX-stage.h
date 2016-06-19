@@ -263,6 +263,8 @@ public:
 			}else if (isAlertStatus && bigbox.get_bigWinner() != 0) {
 				if (btnCode == 99) {
 					isAlertStatus = false;
+					isMulti = false;
+					isFirst = false;
 					bigbox.reset_BIG(1);
 					memset(chessStatus, 0, sizeof(chessStatus));
 					return TITLEPAGE;
@@ -388,7 +390,7 @@ public:
 	//当鼠标在可落子区域时提示对手下一步的可落子区域    喵喵喵喵喵*****************************************
 	void onHover(int x, int y) {
 		int btnCode = onBtn(x, y);
-		if (btnCode != 0) {
+		if (btnCode != 0 && btnCode != 100) {
 			int index = (btnCode - 1) / 9 % 3 * 3 + (btnCode - 1) % 9 % 3;
 			COOR_3 temp((btnCode - 1) / 9, (btnCode - 1) % 9);
 			if (bigbox.Box[temp.get_BX()][temp.get_BY()].get_canFill()

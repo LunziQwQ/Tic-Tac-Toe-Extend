@@ -11,7 +11,7 @@ public:
 	SDL_Texture* chess_X =				//X棋子
 		loadTexture("resource/Xpic.png");
 	SDL_Texture* chess_BO =				//放大的带有阴影的O棋子
-		loadTexture("resource/Opic.png");
+		loadTexture("resource/BO.png");
 	SDL_Texture* chess_BX =				//放大的带有阴影的X棋子
 		loadTexture("resource/BX.png");
 	SDL_Texture* titlePage_btn0 =		//首页的第一个棋子

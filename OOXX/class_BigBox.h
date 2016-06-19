@@ -29,7 +29,7 @@ public:
 	void ban(int BX, int BY);
 
 	//判断大棋盘的胜利者
-	int checkBigWinner();
+	void checkBigWinner();
 
 	//更新大棋盘战况
 	void upgradeBig();

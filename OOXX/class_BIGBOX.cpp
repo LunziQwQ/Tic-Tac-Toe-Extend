@@ -51,7 +51,7 @@ bool BIGBOX::fill(int x, int y) {
 }
 
 //判断大棋盘的胜利者
-int BIGBOX::checkBigWinner() {
+void BIGBOX::checkBigWinner() {
 	int wx = 0, wy = 0, winner = 0;
 	bool flag = false;
 	for (int i = 0; i < MAX; i++) {
@@ -88,8 +88,6 @@ int BIGBOX::checkBigWinner() {
 	if (flag) {
 		bigWinner = Box[wx][wy].get_winner();
 	}
-
-	return winner;
 }
 
 //更新大棋盘战况
