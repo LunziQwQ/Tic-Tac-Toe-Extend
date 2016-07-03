@@ -110,7 +110,6 @@ SDL_Texture* renderText(const std::string message,
 	                    SDL_Color color, 
 	                    int fontsize,
 	                    SDL_Renderer *renderer) {
-
 	TTF_Font *font = TTF_OpenFont(fontFile.c_str(), fontsize);
 	if (font == NULL) {
 		printf("Unable to load TTF %s! SDL_ttf Error: %s\n", fontFile.c_str(), TTF_GetError());
@@ -130,6 +129,7 @@ SDL_Texture* renderText(const std::string message,
 			}
 		}
 	}
+	return NULL;
 }
 
 

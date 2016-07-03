@@ -21,8 +21,9 @@
 StyleSheet SS;			//SDL————样式表类
 Timer timer;			//SDL————计时（帧）器类
 BIGBOX bigbox(1);		//Logic————大棋盘
-bool isMulti = false;
-bool isFirst = false;
+
+bool isMulti = false;	//当前游戏是否为多人游戏
+bool isFirst = false;	//本玩家是否为先手
 
 //页面的编号定义
 const int TITLEPAGE = 0;
@@ -49,10 +50,7 @@ int main(int argc, char* args[]) {
 		int status = 0;			//当前舞台编号
 
 		//需要等待SDL初始化完成后实例化的类
-
 		Resource resource;		//加载纹理资源				
-
-		//舞台初始化
 		TitlePage titlePage(resource);
 		GamePage gamePage(resource);
 
@@ -127,13 +125,6 @@ int main(int argc, char* args[]) {
 				}
 			}
 
-			//Test
-			
-
-
-
-
-
 			SDL_RenderPresent(gRenderer);	//渲染当前帧的纹理
 			SDL_RenderClear(gRenderer);		//清除上一帧的纹理
 			timer.fpsControl();				//帧数控制
@@ -145,21 +136,6 @@ int main(int argc, char* args[]) {
 
 
 
-
-//OOP
-/*
-Class Mouse
-Class Button
-Class RankList
-Class GameRound
-Class chessBoard
-Class StyleSheet
-Class Animation
-Class stage
-*/
-//触发事件后选择函数（选择执行哪些动作函数
-//触发各个事件的动作封装为函数
-//17FPS
 
 //渲染MIDBOX状态
 //bigbox.Box[][].get	 //0-2 0-2 

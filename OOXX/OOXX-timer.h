@@ -4,7 +4,7 @@ public:
 	Uint32 fpsCount = 0;			//帧数计数器，程序每渲染一帧都会计数
 
 private:
-	const Uint32 fps = 10;			//帧数（控制帧数请修改这个变量）
+	const Uint32 fps = 60;			//帧数（控制帧数请修改这个变量）
 	const Uint32 FPS = 1000 / fps;	//一帧持续多少Tick
 	Uint32 fpsTimer = 0;			//上一帧的Tick
 };

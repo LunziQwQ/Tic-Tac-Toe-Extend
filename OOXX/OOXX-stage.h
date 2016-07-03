@@ -39,7 +39,6 @@ protected:
 		SDLK_KP_0, SDLK_KP_1, SDLK_KP_2, SDLK_KP_3, SDLK_KP_4,
 		SDLK_KP_5, SDLK_KP_6, SDLK_KP_7, SDLK_KP_8, SDLK_KP_9,
 	};
-
 };
 
 //标题页面舞台-----------------------------------------------------------
@@ -57,7 +56,6 @@ public:
 		printf("OnClick --> KEYCODE:%d\n", btnCode);
 
 		if (btnCode != 0) {
-
 			//配对窗口存在时的点击事件
 			if (isAlertStatus) {
 				switch (btnCode) {
@@ -79,7 +77,6 @@ public:
 					return TITLEPAGE;
 				}
 			}
-
 			//非配对窗口存在时点击事件
 			else {
 				switch (btnCode) {
@@ -91,11 +88,9 @@ public:
 				case 3:
 					system("explorer \"https://github.com/LunziQwQ/OOXXChessGame-bySDL\" ");
 					return TITLEPAGE;
-
 				}
 			}
 		}
-
 		//点击未定义空白时默认不切换舞台
 		return TITLEPAGE;
 	}
@@ -117,8 +112,6 @@ public:
 				}
 			}
 		}
-		
-
 	}
 
 	//渲染方法
@@ -132,14 +125,11 @@ public:
 		SDL_RenderCopy(gRenderer, resource.titlePage_btn2, NULL, &SS.titlePage_btns[2]);
 		
 		//当点击多人游戏是打开输入配对码窗口
-		if (isAlertStatus) showInput();
-		
+		if (isAlertStatus) 
+			showInput();
 	}
-
 	//舞台退出与转场方法
-	void exit() {
-
-	}
+	void exit() {}
 
 	//判定按键方法扩展
 	int onBtn(int x,int y) {
@@ -164,7 +154,7 @@ public:
 private:
 	//是否点击了多人游戏按钮，是则弹出输出配对码窗口
 
-	//临时存储
+	//临时存储，未输入值为-1
 	int pairCode[4] = {-1,-1,-1,-1};
 
 	//显示请输入配对码窗口
@@ -246,11 +236,9 @@ public:
 			//正常游戏状态
 			if (!isAlertStatus && bigbox.get_bigWinner() == 0) {
 				if (btnCode <= 81) {
-
 					if (!isMulti
-						|| (isMulti && bigbox.get_currentPlayer() == 1 && isFirst)
-						|| (isMulti && bigbox.get_currentPlayer() != 1 && !isFirst)) {
-
+					|| (isMulti && bigbox.get_currentPlayer() == 1 && isFirst)
+					|| (isMulti && bigbox.get_currentPlayer() != 1 && !isFirst)) {
 						doStep(btnCode - 1, bigbox.get_currentPlayer());	//下子位置与玩家编号(获取到的玩家编号）
 						return GAMEPAGE;
 					}
@@ -258,7 +246,6 @@ public:
 				if (btnCode == 100) {
 					isAlertStatus = true;
 				}
-
 			//触发了游戏结束，弹出结算Alert
 			}else if (isAlertStatus && bigbox.get_bigWinner() != 0) {
 				if (btnCode == 99) {
@@ -281,12 +268,10 @@ public:
 					isAlertStatus = false;
 					return GAMEPAGE;
 				}
-
 			}
 		}
 		return GAMEPAGE;
 	}
-
 	//渲染方法
 	void load() {
 
@@ -302,6 +287,7 @@ public:
 		else
 			SDL_RenderCopy(gRenderer, resource.chess_BO, NULL, &SS.gamePage_nowTurnIMG);
 
+		//渲染当前棋盘上存在的棋子
 		for (int i = 0; i < 81; i++){
 			if (chessStatus[i] == 1)		//玩家1
 				SDL_RenderCopy(gRenderer, resource.chess_O, NULL, &SS.gamePage_chessPoint[i]);
@@ -309,6 +295,7 @@ public:
 				SDL_RenderCopy(gRenderer, resource.chess_X, NULL, &SS.gamePage_chessPoint[i]);
 		}
 
+		//如果是多人游戏且当前己方回合，渲染可落子区域
 		if (!isMulti						
 			|| (isMulti && bigbox.get_currentPlayer() == 1 && isFirst)
 			|| (isMulti && bigbox.get_currentPlayer() != 1 && !isFirst)) {
@@ -337,18 +324,12 @@ public:
 			SDL_RenderCopy(gRenderer, resource.alert_wantExit, NULL, &SS.alert_wantExit);
 			SDL_RenderCopy(gRenderer, resource.alert_willLose, NULL, &SS.alert_willLose);
 		}
-
 	}
-
 	//按键方法
-	void onKeyPress(int keyCode) {
-
-	}
+	void onKeyPress(int keyCode) {}
 
 	//舞台退出及转场方法
-	void exit() {
-
-	}
+	void exit() {}
 
 	//判定点击位置方法 return BtnCode
 	int onBtn(int x, int y) {
@@ -379,54 +360,43 @@ public:
 		}
 		return 0;
 	}
-
+	//获得远程对方落子坐标
 	void getMultiStep(std::string result) {
 		int index = atoi(result.c_str());
 		if (bigbox.fill((index) / 9, (index) % 9)) {
 			chessStatus[index] = bigbox.get_currentPlayer();
 		}
 	}
-
-	//当鼠标在可落子区域时提示对手下一步的可落子区域    喵喵喵喵喵*****************************************
+	//当鼠标在可落子区域时提示对手下一步的可落子区域    
 	void onHover(int x, int y) {
 		int btnCode = onBtn(x, y);
 		if (btnCode != 0 && btnCode != 100) {
 			int index = (btnCode - 1) / 9 % 3 * 3 + (btnCode - 1) % 9 % 3;
 			COOR_3 temp((btnCode - 1) / 9, (btnCode - 1) % 9);
 			if (bigbox.Box[temp.get_BX()][temp.get_BY()].get_canFill()
-				&& !bigbox.Box[temp.get_BX()][temp.get_BY()].haveChess(temp.get_x(),temp.get_y())) {	//当前鼠标位置可落子
-
+			&& !bigbox.Box[temp.get_BX()][temp.get_BY()].haveChess(temp.get_x(),temp.get_y())) {	//当前鼠标位置可落子
 				if (bigbox.Box[index / 3][index % 3].get_winner() == 0) {	//映射midBox可落子
-
 					if (bigbox.get_currentPlayer() == 1)
 						SDL_RenderCopy(gRenderer, resource.gamePage_blueNext, NULL, &SS.gamePage_midBox[index]);
 					else
 						SDL_RenderCopy(gRenderer, resource.gamePage_redNext, NULL, &SS.gamePage_midBox[index]);
-
 				} else {
-
 					for (int i = 0; i < 9; i++) {
 						if (bigbox.Box[i / 3][i % 3].get_winner() == 0) {
-
 							if (bigbox.get_currentPlayer() == 1)
 								SDL_RenderCopy(gRenderer, resource.gamePage_blueNext, NULL, &SS.gamePage_midBox[i]);
 							else
 								SDL_RenderCopy(gRenderer, resource.gamePage_redNext, NULL, &SS.gamePage_midBox[i]);
-
 						}
 					}
-
 				}
-
 			}
 		}
 	}
 
-
 private:
 	int gameStatus = 0;			//{0:游戏进行, 1 : 玩家1胜利, 2 : 玩家2胜利, 3 : 游戏结束和局}
 	int chessStatus[81];
-
 
 	//落子方法，
 	void doStep(int index, int player) {
@@ -440,16 +410,14 @@ private:
 				//将坐标转换为字符串
 				char data[4];
 				//向服务器端发送坐标的字符串数据
-				socketManager.sendMessage(itoa(index, data, 10));
+				socketManager.sendMessage(_itoa(index, data, 10));
 				cout << data << endl;
 			}
 			chessStatus[index] = bigbox.get_currentPlayer();	//1或2
 		}
-
 		//询问当前游戏状态并保存
 		gameStatus = bigbox.get_bigWinner();
 	}
-
 	//显示可落子的区域 半透明色块
 	void showWhereCanFill() {
 		for (int i = 0; i < 9; i++){
@@ -471,6 +439,4 @@ private:
 
 		}
 	}
-
-
 };
