@@ -14,6 +14,8 @@ public:
 		loadTexture("resource/BO.png");
 	SDL_Texture* chess_BX =				//放大的带有阴影的X棋子
 		loadTexture("resource/BX.png");
+	SDL_Texture* chess_Draw =			//MIDBOX平局结果
+		loadTexture("resource/draw.png");
 	SDL_Texture* titlePage_btn0 =		//首页的第一个棋子
 		loadTexture("resource/singleBtn.png");
 	SDL_Texture* titlePage_btn1 =		//首页的第二个棋子

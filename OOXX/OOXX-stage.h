@@ -434,9 +434,8 @@ private:
 				SDL_RenderCopy(gRenderer, resource.chess_BX, NULL, &SS.gamePage_midBox[i]);
 			if (bigbox.Box[i / 3][i % 3].get_winner() == 2)
 				SDL_RenderCopy(gRenderer, resource.chess_BO, NULL, &SS.gamePage_midBox[i]);
-			//if (bigbox.Box[i / 3][i % 3].get_winner() == 3)
-				//TODO ºÍÆåÊ±MIDBOXµÄ×´Ì¬
-
+			if (bigbox.Box[i / 3][i % 3].get_winner() == 3)
+				SDL_RenderCopy(gRenderer, resource.chess_Draw, NULL, &SS.gamePage_midBox[i]);
 		}
 	}
 };
