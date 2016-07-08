@@ -51,7 +51,7 @@ void MIDBOX::set_smallBox(int x, int y, int n) {
 void MIDBOX::ifFull() {
 	for (int i = 0;i < MAX;i++) {
 		for (int j = 0;j < MAX;j++) {
-			if (smallBox[i][j] != 0) {
+			if (smallBox[i][j] == 0) {
 				isFull = false;
 				return;
 			}
@@ -98,6 +98,7 @@ void MIDBOX::checkSmallWinner() {
 	if (flag) {
 		winner = smallBox[wx][wy];
 	}
+	ifFull();
 	if (winner == 0 && get_isFull()){
 		winner = 3;
 	}

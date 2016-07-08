@@ -50,7 +50,7 @@ bool BIGBOX::fill(int x, int y) {
 	}
 }
 
-//判断大棋盘的胜利者
+//判断大棋盘的胜利者（0，1，2，3  0为初始状态，3为和棋）
 void BIGBOX::checkBigWinner() {
 	int wx = 0, wy = 0, winner = 0;
 	bool flag = false;
@@ -87,6 +87,10 @@ void BIGBOX::checkBigWinner() {
 	}
 	if (flag) {
 		bigWinner = Box[wx][wy].get_winner();
+	}
+	checkFull();
+	if (bigWinner == 0 && get_isFull()) {
+		bigWinner = 3;
 	}
 }
 
@@ -129,4 +133,25 @@ void BIGBOX::reset_BIG(int player) {
 			Box[i][j].reset_MID();
 		}
 	}
+}
+
+void BIGBOX::checkFull() {
+	for (int i = 0; i < MAX; i++) {
+		for (int j = 0; j < MAX; j++) {
+			if (!Box[i][j].get_isFull()) {
+				set_isFull(false);
+				return;
+			}
+		}
+	}
+	set_isFull(true);
+	return;
+}
+
+bool BIGBOX::get_isFull() {
+	return isFull;
+}
+
+void BIGBOX::set_isFull(bool x) {
+	isFull = x;
 }

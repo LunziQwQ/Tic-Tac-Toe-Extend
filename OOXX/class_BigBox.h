@@ -5,6 +5,7 @@ class BIGBOX{
 private:
 	int bigWinner = 0;
 	int currentPlayer = 1;
+	bool isFull = false;
 public:
 	BIGBOX(int player);
 
@@ -36,4 +37,13 @@ public:
 
 	//重置整个棋盘
 	void reset_BIG(int player);
+
+	//判断棋盘是否填满
+	void checkFull();
+
+	//获取isFull
+	bool get_isFull();
+
+	//修改isFull
+	void set_isFull(bool x);
 };
