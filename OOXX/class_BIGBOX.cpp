@@ -128,6 +128,7 @@ void BIGBOX::changePlayer(int currentPlayer) {
 void BIGBOX::reset_BIG(int player) {
 	currentPlayer = player;
 	bigWinner = 0;
+	isFull = false;
 	for (int i = 0;i < MAX;i++) {
 		for (int j = 0;j < MAX;j++) {
 			Box[i][j].reset_MID();
@@ -138,7 +139,7 @@ void BIGBOX::reset_BIG(int player) {
 void BIGBOX::checkFull() {
 	for (int i = 0; i < MAX; i++) {
 		for (int j = 0; j < MAX; j++) {
-			if (!Box[i][j].get_isFull()) {
+			if (Box[i][j].get_winner() == 0) {
 				set_isFull(false);
 				return;
 			}
